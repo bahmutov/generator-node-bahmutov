@@ -1,0 +1,25 @@
+{
+  "name": "generator-node-bahmutov",
+  "version": "1.0.0",
+  "description": "My personal Yeoman generator for Node projects",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bahmutov/generator-node-bahmutov.git"
+  },
+  "keywords": [
+    "yeoman",
+    "generator",
+    "node",
+    "npm"
+  ],
+  "author": "Gleb Bahmutov <gleb.bahmutov@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bahmutov/generator-node-bahmutov/issues"
+  },
+  "homepage": "https://github.com/bahmutov/generator-node-bahmutov#readme"
+}
