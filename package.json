@@ -21,5 +21,10 @@
   "bugs": {
     "url": "https://github.com/bahmutov/generator-node-bahmutov/issues"
   },
-  "homepage": "https://github.com/bahmutov/generator-node-bahmutov#readme"
+  "homepage": "https://github.com/bahmutov/generator-node-bahmutov#readme",
+  "dependencies": {
+    "check-more-types": "2.12.0",
+    "lazy-ass": "1.4.0",
+    "yeoman-generator": "0.22.5"
+  }
 }
