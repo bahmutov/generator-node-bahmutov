@@ -2,10 +2,13 @@
   "name": "generator-node-bahmutov",
   "version": "1.0.0",
   "description": "My personal Yeoman generator for Node projects",
-  "main": "index.js",
+  "main": "app/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "files": [
+    "app"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bahmutov/generator-node-bahmutov.git"
