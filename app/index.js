@@ -3,6 +3,7 @@
 const debug = require('debug')('gen')
 const generators = require('yeoman-generator')
 const _ = require('lodash')
+const originUrl = require('git-remote-origin-url')
 
 const defaults = {
   version: '1.0.0',
@@ -46,6 +47,18 @@ const g = generators.Base.extend({
       console.error('git remote add origin ...')
       process.exit(-1)
     }
+  },
+  gitOrigin: function gitOrigin () {
+    const done = this.async()
+    originUrl().then((url) => {
+      this.originUrl = url
+      debug('git origin url', url)
+      done()
+    }).catch((err) => {
+      console.error('Git origin error')
+      console.error(err)
+      process.exit(-1)
+    })
   },
   author: function author () {
     this.answers = _.extend(this.answers, {
