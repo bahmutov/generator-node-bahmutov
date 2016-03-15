@@ -20,7 +20,8 @@ const defaults = {
     pretest: 'npm run format && npm run lint',
     lint: 'standard --verbose index.js src/*.js',
     format: 'standard-format -w index.js src/*.js',
-    size: 't=\"$(npm pack .)\"; wc -c \"${t}\"; tar tvf \"${t}\"; rm \"${t}\";'
+    size: 't=\"$(npm pack .)\"; wc -c \"${t}\"; tar tvf \"${t}\"; rm \"${t}\";',
+    issues: 'git-issues'
   },
   config: {
     'pre-git': {
@@ -95,7 +96,7 @@ const g = generators.Base.extend({
     })
   },
   installDeps: function () {
-    // const deps = ['pre-git', 'standard', 'standard-format', 'mocha']
+    // const deps = ['pre-git', 'standard', 'standard-format', 'mocha', 'git-issues']
     // this.npmInstall(deps, { 'saveDev': true })
   }
 })
