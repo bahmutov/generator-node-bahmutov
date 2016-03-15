@@ -13,3 +13,11 @@ Change into an empty folder, for example
     mkdir test-generator
     cd test-generator
     yo node-bahmutov
+
+## Debugging
+
+Run the generator with environment variable DEBUG set to "gen"
+
+    DEBUG=gen yo node-bahmutov
+
+## Development
