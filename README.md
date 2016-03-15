@@ -21,3 +21,25 @@ Run the generator with environment variable DEBUG set to "gen"
     DEBUG=gen yo node-bahmutov
 
 ## Development
+
+## Goal
+
+Trying to recreate all the information asked for during `npm init` command (plus a few good
+defaults)
+
+```json
+{
+  "name": "test-generator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
+```
