@@ -37,8 +37,8 @@
     "pre-git": {
       "commit-msg": "simple",
       "pre-commit": [],
-      "pre-push": [],
-      "post-commit": ["npm run size"],
+      "pre-push": ["npm run size"],
+      "post-commit": [],
       "post-merge": []
     }
   },
