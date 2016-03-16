@@ -42,7 +42,7 @@ const defaults = {
   bugs: ''
 }
 
-function isEmpty(x) {
+function isEmpty (x) {
   return x
 }
 
@@ -121,6 +121,14 @@ const g = generators.Base.extend({
         url: this.originUrl
       }
     })
+  },
+  homepage: function () {
+    this.answers.homepage = 'https://github.com/' + this.answers.githubUsername +
+      '/' + this.answers.name + '#readme'
+  },
+  bugs: function () {
+    this.answers.homepage = 'https://github.com/' + this.answers.githubUsername +
+      '/' + this.answers.name + '/issues'
   },
   copyReadme: function () {
     const readmeContext = {
