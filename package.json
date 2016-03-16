@@ -4,7 +4,7 @@
   "main": "app/index.js",
   "version": "0.0.0-semantic-release",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo No unit tests",
     "commit": "commit-wizard",
     "pretest": "npm run format && npm run lint",
     "lint": "standard --verbose app/index.js",
@@ -16,6 +16,7 @@
   "files": [
     "app"
   ],
+  "preferGlobal": true,
   "repository": {
     "type": "git",
     "url": "https://github.com/bahmutov/generator-node-bahmutov.git"

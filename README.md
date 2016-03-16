@@ -1,14 +1,35 @@
 # generator-node-bahmutov
 
+> Creates good package.json for new Node projects
+
 [![NPM][generator-node-bahmutov-icon] ][generator-node-bahmutov-url]
 
 [![Build status][generator-node-bahmutov-ci-image] ][generator-node-bahmutov-ci-url]
 [![semantic-release][semantic-image] ][semantic-url]
 
-Goal: replace the questions and answers from `npm init` with values collected from
-the environment.
+## Install and use
 
-Following [the instructions](http://yeoman.io/authoring/index.html)
+    npm install -g yo generator-node-bahmutov
+
+In a new project folder
+
+    git init
+    git add remote origin <remote git>
+    yo node-bahmutov
+
+Answer a few questions and you should be all set.
+
+## Features
+
+* Unit testing with [Mocha](http://mochajs.org/)
+* Linting and auto formatting using [standard](http://standardjs.com/) and 
+  [standard-format](https://github.com/maxogden/standard-format)
+* Showing open Git issues using `npm run issues` via 
+  [git-issues](https://github.com/softwarescales/git-issues)
+* Git hooks and message validation using [pre-git](https://github.com/bahmutov/pre-git)
+* Packaged [size reporting on pre-push hook][size] with `npm run size`
+
+[size]: https://glebbahmutov.com/blog/smaller-published-NPM-modules/
 
 ## Test
 
@@ -27,27 +48,7 @@ Run the generator with environment variable DEBUG set to "gen"
 
 ## Development
 
-## Goal
-
-Trying to recreate all the information asked for during `npm init` command (plus a few good
-defaults)
-
-```json
-{
-  "name": "test-generator",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "dependencies": {},
-  "devDependencies": {},
-  "scripts": {
-    "test": "mocha"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
-}
-```
+Following [the instructions](http://yeoman.io/authoring/index.html)
 
 ### Small print
 
