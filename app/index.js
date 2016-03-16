@@ -42,6 +42,10 @@ const defaults = {
   bugs: ''
 }
 
+function isEmpty(x) {
+  return x
+}
+
 const g = generators.Base.extend({
   setDefaults: function () {
     this.answers = defaults
@@ -105,7 +109,7 @@ const g = generators.Base.extend({
       store: true
     }]
     this.prompt(questions, (answers) => {
-      answers.keywords = answers.keywords.split(',')
+      answers.keywords = answers.keywords.split(',').filter(isEmpty)
       this.answers = _.extend(defaults, answers)
       done()
     })
