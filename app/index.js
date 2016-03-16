@@ -45,6 +45,12 @@ const g = generators.Base.extend({
   setDefaults: function () {
     this.answers = defaults
   },
+  copyNpmrc: function () {
+    this.fs.copy(
+      this.templatePath('npmrc'),
+      this.destinationPath('.npmrc')
+    )
+  },
   git: function git () {
     const exists = require('fs').existsSync
     if (!exists('.git')) {
