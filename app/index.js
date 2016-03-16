@@ -86,8 +86,10 @@ const g = generators.Base.extend({
     // HACK, cannot get github username reliably from email
     // hitting api rate limits
     // parse github url instead
-    this.answers.githubUsername = usernameFromGithubUrl(this.originUrl)
-    debug('got github username', this.answers.githubUsername)
+    this.githubUsername = usernameFromGithubUrl(this.originUrl)
+    debug('got github username', this.githubUsername)
+    console.assert(this.githubUsername,
+      'Could not get github username from url ' + this.originUrl)
   },
   projectName: function () {
     const done = this.async()
@@ -123,11 +125,11 @@ const g = generators.Base.extend({
     })
   },
   homepage: function () {
-    this.answers.homepage = 'https://github.com/' + this.answers.githubUsername +
+    this.answers.homepage = 'https://github.com/' + this.githubUsername +
       '/' + this.answers.name + '#readme'
   },
   bugs: function () {
-    this.answers.homepage = 'https://github.com/' + this.answers.githubUsername +
+    this.answers.bugs = 'https://github.com/' + this.githubUsername +
       '/' + this.answers.name + '/issues'
   },
   copyReadme: function () {
@@ -136,7 +138,7 @@ const g = generators.Base.extend({
       description: this.answers.description,
       author: this.answers.author,
       year: (new Date()).getFullYear(),
-      username: this.answers.githubUsername
+      username: this.githubUsername
     }
     debug('Copying readme template with values', readmeContext)
     this.fs.copyTpl(
