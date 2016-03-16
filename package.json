@@ -1,6 +1,5 @@
 {
   "name": "generator-node-bahmutov",
-  "version": "1.0.0",
   "description": "My personal Yeoman generator for Node projects",
   "main": "app/index.js",
   "scripts": {
@@ -10,14 +9,15 @@
     "lint": "standard --verbose app/index.js",
     "format": "standard-format -w app/index.js",
     "size": "t=\"$(npm pack .)\"; wc -c \"${t}\"; tar tvf \"${t}\"; rm \"${t}\";",
-    "issues": "git-issues"
+    "issues": "git-issues",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "files": [
     "app"
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bahmutov/generator-node-bahmutov.git"
+    "url": "https://github.com/bahmutov/generator-node-bahmutov.git"
   },
   "keywords": [
     "yeoman",
@@ -58,6 +58,7 @@
     "git-issues": "1.2.0",
     "pre-git": "3.6.0",
     "standard": "6.0.8",
-    "standard-format": "2.1.1"
+    "standard-format": "2.1.1",
+    "semantic-release": "^4.3.5"
   }
 }
