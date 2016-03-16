@@ -5,6 +5,8 @@ const generators = require('yeoman-generator')
 const _ = require('lodash')
 const originUrl = require('git-remote-origin-url')
 const fs = require('fs')
+const fixpack = require('fixpack')
+const packageFilename = 'package.json'
 
 const defaults = {
   version: '1.0.0',
@@ -34,7 +36,9 @@ const defaults = {
       'post-commit': [],
       'post-merge': []
     }
-  }
+  },
+  homepage: '',
+  bugs: ''
 }
 
 const g = generators.Base.extend({
@@ -80,6 +84,11 @@ const g = generators.Base.extend({
       name: 'description',
       message: 'Project description',
       store: true
+    }, {
+      type: 'input',
+      name: 'keywords',
+      message: 'Comma separated keywords',
+      store: true
     }]
     this.prompt(questions, (answers) => {
       this.answers = _.extend(defaults, answers)
@@ -101,11 +110,15 @@ const g = generators.Base.extend({
   writePackage: function writePackage () {
     debug('writing package.json file')
     const str = JSON.stringify(this.answers, null, 2) + '\n'
-    fs.writeFileSync('package.json', str, 'utf8')
+    fs.writeFileSync(packageFilename, str, 'utf8')
+  },
+  fixpack: function () {
+    debug('fixing package.json')
+    fixpack(packageFilename)
   },
   installDeps: function () {
-    // const deps = ['pre-git', 'standard', 'standard-format', 'mocha', 'git-issues']
-    // this.npmInstall(deps, { 'saveDev': true })
+    const deps = ['pre-git', 'standard', 'standard-format', 'mocha', 'git-issues']
+    this.npmInstall(deps, { 'saveDev': true })
   }
 })
 module.exports = g
