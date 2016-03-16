@@ -4,6 +4,7 @@ const debug = require('debug')('gen')
 const generators = require('yeoman-generator')
 const _ = require('lodash')
 const originUrl = require('git-remote-origin-url')
+const fs = require('fs')
 
 const defaults = {
   version: '1.0.0',
@@ -82,7 +83,6 @@ const g = generators.Base.extend({
     }]
     this.prompt(questions, (answers) => {
       this.answers = _.extend(defaults, answers)
-      debug('extended answers', this.answers)
       done()
     })
   },
@@ -90,16 +90,22 @@ const g = generators.Base.extend({
     this.answers = _.extend(this.answers, {
       repository: {
         type: 'git',
-        url: 'git+https://github.com/' + this.user.github.username(this.user.git.name()) +
-          '/' + this.answers.name + '.git'
+        url: this.originUrl
       }
     })
+  },
+  report: function () {
+    debug('all values')
+    debug(JSON.stringify(this.answers, null, 2))
+  },
+  writePackage: function writePackage () {
+    debug('writing package.json file')
+    const str = JSON.stringify(this.answers, null, 2) + '\n'
+    fs.writeFileSync('package.json', str, 'utf8')
   },
   installDeps: function () {
     // const deps = ['pre-git', 'standard', 'standard-format', 'mocha', 'git-issues']
     // this.npmInstall(deps, { 'saveDev': true })
   }
 })
-// console.log('extended generator')
-// console.log(g)
 module.exports = g
