@@ -97,6 +97,7 @@ const g = generators.Base.extend({
       store: true
     }]
     this.prompt(questions, (answers) => {
+      answers.keywords = answers.keywords.split(',')
       this.answers = _.extend(defaults, answers)
       done()
     })
