@@ -6,6 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "commit": "commit-wizard",
+    "pretest": "npm run format && npm run lint",
+    "lint": "standard --verbose app/index.js",
+    "format": "standard-format -w app/index.js",
     "size": "t=\"$(npm pack .)\"; wc -c \"${t}\"; tar tvf \"${t}\"; rm \"${t}\";",
     "issues": "git-issues"
   },
@@ -39,7 +42,9 @@
   "config": {
     "pre-git": {
       "commit-msg": "simple",
-      "pre-commit": [],
+      "pre-commit": [
+        "npm run pretest"
+      ],
       "pre-push": [
         "npm run size"
       ],
@@ -49,6 +54,8 @@
   },
   "devDependencies": {
     "git-issues": "1.2.0",
-    "pre-git": "3.6.0"
+    "pre-git": "3.6.0",
+    "standard": "6.0.8",
+    "standard-format": "2.1.1"
   }
 }
