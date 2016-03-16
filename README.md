@@ -28,6 +28,7 @@ Answer a few questions and you should be all set.
   [git-issues](https://github.com/softwarescales/git-issues)
 * Git hooks and message validation using [pre-git](https://github.com/bahmutov/pre-git)
 * Packaged [size reporting on pre-push hook][size] with `npm run size`
+* Targeted at public github repos
 
 [size]: https://glebbahmutov.com/blog/smaller-published-NPM-modules/
 

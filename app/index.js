@@ -7,6 +7,7 @@ const originUrl = require('git-remote-origin-url')
 const fs = require('fs')
 const fixpack = require('fixpack')
 const packageFilename = 'package.json'
+const usernameFromGithubUrl = require('./github-username')
 
 const defaults = {
   version: '1.0.0',
@@ -77,6 +78,13 @@ const g = generators.Base.extend({
       author: this.user.git.name() + ' <' + this.user.git.email() + '>'
     })
   },
+  githubUsername: function githubUsername () {
+    // HACK, cannot get github username reliably from email
+    // hitting api rate limits
+    // parse github url instead
+    this.answers.githubUsername = usernameFromGithubUrl(this.originUrl)
+    debug('got github username', this.answers.githubUsername)
+  },
   projectName: function () {
     const done = this.async()
     const questions = [{
@@ -109,6 +117,21 @@ const g = generators.Base.extend({
         url: this.originUrl
       }
     })
+  },
+  copyReadme: function () {
+    const readmeContext = {
+      name: this.answers.name,
+      description: this.answers.description,
+      author: this.answers.author,
+      year: (new Date()).getFullYear(),
+      username: this.answers.githubUsername
+    }
+    debug('Copying readme template with values', readmeContext)
+    this.fs.copyTpl(
+      this.templatePath('README.md'),
+      this.destinationPath('README.md'),
+      readmeContext
+    )
   },
   report: function () {
     debug('all values')
