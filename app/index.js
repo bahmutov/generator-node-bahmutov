@@ -20,7 +20,7 @@ const defaults = {
     pretest: 'npm run format && npm run lint',
     lint: 'standard --verbose index.js src/*.js',
     format: 'standard-format -w index.js src/*.js',
-    size: 't=\"$(npm pack .)\"; wc -c \"${t}\"; tar tvf \"${t}\"; rm \"${t}\";',
+    size: 't="$(npm pack .)"; wc -c "${t}"; tar tvf "${t}"; rm "${t}";',
     issues: 'git-issues'
   },
   config: {
@@ -69,15 +69,15 @@ const g = generators.Base.extend({
   projectName: function () {
     const done = this.async()
     const questions = [{
-      type    : 'input',
-      name    : 'name',
-      message : 'Your project name',
-      default : _.kebabCase(this.appname),
+      type: 'input',
+      name: 'name',
+      message: 'Your project name',
+      default: _.kebabCase(this.appname),
       store: true
     }, {
-      type    : 'input',
-      name    : 'description',
-      message : 'Project description',
+      type: 'input',
+      name: 'description',
+      message: 'Project description',
       store: true
     }]
     this.prompt(questions, (answers) => {
