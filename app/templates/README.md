@@ -6,6 +6,7 @@
 
 [![Build status][ci-image] ][ci-url]
 [![semantic-release][semantic-image] ][semantic-url]
+[![js-standard-style][standard-image]] [http://standardjs.com/]
 
 ### Small print
 
@@ -53,3 +54,4 @@ OTHER DEALINGS IN THE SOFTWARE.
 [ci-url]: https://travis-ci.org/<%= username %>/<%= name %>
 [semantic-image]: https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg
 [semantic-url]: https://github.com/semantic-release/semantic-release
+[standard-image]: https://img.shields.io/badge/code%20style-standard-brightgreen.svg
