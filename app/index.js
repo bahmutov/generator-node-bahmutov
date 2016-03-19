@@ -56,6 +56,12 @@ const g = generators.Base.extend({
       this.destinationPath('.npmrc')
     )
   },
+  copyGitignore: function () {
+    this.fs.copy(
+      this.templatePath('gitignore'),
+      this.destinationPath('.gitignore')
+    )
+  },
   git: function git () {
     const exists = require('fs').existsSync
     if (!exists('.git')) {
