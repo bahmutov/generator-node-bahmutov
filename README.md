@@ -30,6 +30,7 @@ Answer a few questions and you should be all set.
 * Packaged [size reporting on pre-push hook][size] with `npm run size`
 * Targeted at public github repos
 * Default `.npmrc` and `.gitignore` files
+* Running [Node Security Project](https://github.com/nodesecurity/nsp) check pre-push
 
 [size]: https://glebbahmutov.com/blog/smaller-published-NPM-modules/
 
@@ -41,6 +42,8 @@ Change into an empty folder, for example
     mkdir test-generator
     cd test-generator
     yo node-bahmutov
+
+Or just run `npm run e2e` (assumes global `yo` install)
 
 ## Debugging
 

@@ -14,14 +14,16 @@ const defaults = {
     lint: 'standard --verbose index.js src/*.js',
     format: 'standard-format -w index.js src/*.js',
     size: 't="$(npm pack .)"; wc -c "${t}"; tar tvf "${t}"; rm "${t}";',
-    issues: 'git-issues'
+    issues: 'git-issues',
+    secure: 'nsp check'
   },
   config: {
     'pre-git': {
       'commit-msg': 'simple',
       'pre-commit': ['npm test'],
       'pre-push': [
-        'npm run size'
+        'npm run size',
+        'npm run secure'
       ],
       'post-commit': [],
       'post-merge': []

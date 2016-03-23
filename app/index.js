@@ -135,7 +135,7 @@ const g = generators.Base.extend({
     fixpack(packageFilename)
   },
   installDeps: function () {
-    const deps = ['pre-git', 'standard', 'standard-format', 'mocha', 'git-issues']
+    const deps = ['pre-git', 'standard', 'standard-format', 'mocha', 'git-issues', 'nsp']
     this.npmInstall(deps, { 'saveDev': true })
   }
 })
