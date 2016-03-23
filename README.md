@@ -21,18 +21,23 @@ Answer a few questions and you should be all set.
 
 ## Features
 
-* Unit testing with [Mocha](http://mochajs.org/)
+* Targeted at public github repos
+* Default `.npmrc` and `.gitignore` files
+* Git hooks and message validation using [pre-git](https://github.com/bahmutov/pre-git)
 * Linting and auto formatting using [standard](http://standardjs.com/) and 
   [standard-format](https://github.com/maxogden/standard-format)
 * Showing open Git issues using `npm run issues` via 
   [git-issues](https://github.com/softwarescales/git-issues)
-* Git hooks and message validation using [pre-git](https://github.com/bahmutov/pre-git)
+* Unit testing with [Mocha](http://mochajs.org/)
 * Packaged [size reporting on pre-push hook][size] with `npm run size`
-* Targeted at public github repos
-* Default `.npmrc` and `.gitignore` files
 * Running [Node Security Project](https://github.com/nodesecurity/nsp) check pre-push
 
 [size]: https://glebbahmutov.com/blog/smaller-published-NPM-modules/
+
+## Recommended
+
+I recommend installing [semantic release](https://github.com/semantic-release/semantic-release) 
+right away after bootstrapping the project, it will work nicely with the commit message format.
 
 ## Test
 
