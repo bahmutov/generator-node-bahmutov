@@ -12,7 +12,8 @@
     "format": "standard-format -w app/index.js",
     "size": "t=\"$(npm pack .)\"; wc -c \"${t}\"; tar tvf \"${t}\"; rm \"${t}\";",
     "issues": "git-issues",
-    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post",
+    "e2e": "./test/e2e.sh"
   },
   "files": [
     "app/*",
@@ -52,6 +53,7 @@
         "npm run pretest"
       ],
       "pre-push": [
+        "npm run e2e",
         "npm run size"
       ],
       "post-commit": [],
