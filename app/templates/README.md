@@ -6,7 +6,7 @@
 
 [![Build status][ci-image] ][ci-url]
 [![semantic-release][semantic-image] ][semantic-url]
-[![js-standard-style][standard-image]] [http://standardjs.com/]
+[![js-standard-style][standard-image]](http://standardjs.com/)
 
 ### Small print
 
