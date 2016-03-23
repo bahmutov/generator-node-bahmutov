@@ -22,6 +22,7 @@ Answer a few questions and you should be all set.
 ## Features
 
 * Targeted at public github repos
+* Assumes single `index.js` and `src` folder
 * Default `.npmrc` and `.gitignore` files
 * Git hooks and message validation using [pre-git](https://github.com/bahmutov/pre-git)
 * Linting and auto formatting using [standard](http://standardjs.com/) and 

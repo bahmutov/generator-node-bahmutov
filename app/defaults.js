@@ -9,7 +9,7 @@ const defaults = {
   ],
   scripts: {
     test: 'npm run unit',
-    unit: 'mocha index.js src/*.js',
+    unit: 'mocha src/*-spec.js',
     pretest: 'npm run format && npm run lint',
     lint: 'standard --verbose index.js src/*.js',
     format: 'standard-format -w index.js src/*.js',
