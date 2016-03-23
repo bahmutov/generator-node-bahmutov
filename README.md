@@ -39,6 +39,15 @@ Answer a few questions and you should be all set.
 
 I recommend installing [semantic release](https://github.com/semantic-release/semantic-release) 
 right away after bootstrapping the project, it will work nicely with the commit message format.
+We already include the semantic release badge in the generated README file, so you have no
+excuse
+
+    npm i -g semantic-release-cli
+    semantic-release-cli setup
+
+Add version back into `package.json`, I recommend
+
+    "version": "0.0.0-semantic-release"
 
 ## Test
 
