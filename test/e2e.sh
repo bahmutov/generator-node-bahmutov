@@ -30,4 +30,5 @@ git commit -m "chore(test): this is a test commit"
 
 ls -la
 git log --oneline
+git show
 echo "All done testing generator"
