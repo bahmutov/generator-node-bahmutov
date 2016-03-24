@@ -72,17 +72,17 @@ const g = generators.Base.extend({
       name: 'name',
       message: 'Your project name',
       default: _.kebabCase(this.appname),
-      store: true
+      store: false
     }, {
       type: 'input',
       name: 'description',
       message: 'Project description',
-      store: true
+      store: false
     }, {
       type: 'input',
       name: 'keywords',
       message: 'Comma separated keywords',
-      store: true
+      store: false
     }]
     this.prompt(questions, (answers) => {
       answers.keywords = answers.keywords.split(',').filter(isEmpty)
