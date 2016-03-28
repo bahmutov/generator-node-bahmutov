@@ -9,6 +9,8 @@ const fixpack = require('fixpack')
 const packageFilename = 'package.json'
 const usernameFromGithubUrl = require('./github-username')
 const defaults = require('./defaults')
+const la = require('lazy-ass')
+const is = require('check-more-types')
 
 function isEmpty (x) {
   return x
@@ -40,10 +42,12 @@ const g = generators.Base.extend({
     }
   },
   gitOrigin: function gitOrigin () {
+    const toHttps = require('./https-github-url')
     const done = this.async()
     originUrl().then((url) => {
-      this.originUrl = url
-      debug('git origin url', url)
+      la(is.unemptyString(url), 'could not get github origin url')
+      this.originUrl = toHttps(url)
+      debug('github origin HTTPS url', this.originUrl)
       done()
     }).catch((err) => {
       console.error('Git origin error')
