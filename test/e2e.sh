@@ -24,6 +24,7 @@ touch index.js
 mkdir src
 cd src
 touch foo.js
+touch foo-spec.js
 cd ..
 git add index.js
 echo "Files before the commit"
