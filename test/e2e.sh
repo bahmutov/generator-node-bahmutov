@@ -27,7 +27,7 @@ touch foo.js
 cd ..
 git add index.js
 echo "Files before the commit"
-ls -lR
+find . -maxdepth 2 | egrep -v node_modules | egrep -v .git
 git commit -m "chore(test): this is a test commit"
 
 ls -la
