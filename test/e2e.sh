@@ -26,6 +26,8 @@ cd src
 touch foo.js
 cd ..
 git add index.js
+echo "Files before the commit"
+ls -lR
 git commit -m "chore(test): this is a test commit"
 
 ls -la
