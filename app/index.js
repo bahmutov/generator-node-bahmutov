@@ -5,6 +5,7 @@ const generators = require('yeoman-generator')
 const _ = require('lodash')
 const originUrl = require('git-remote-origin-url')
 const fs = require('fs')
+const path = require('path')
 const fixpack = require('fixpack')
 const packageFilename = 'package.json'
 const usernameFromGithubUrl = require('./github-username')
@@ -124,6 +125,19 @@ const g = generators.Base.extend({
       this.destinationPath('README.md'),
       readmeContext
     )
+  },
+  copySourceFiles: function () {
+    this.fs.copy(
+      this.templatePath('index.js'),
+      this.destinationPath('index.js')
+    )
+    const name = _.kebabCase(this.answers.name)
+    const specFilename = path.join('src', name + '-spec.js')
+    this.fs.copy(
+      this.templatePath('spec.js'),
+      this.destinationPath(specFilename)
+    )
+    debug('copied index.js and', specFilename)
   },
   report: function () {
     debug('all values')

@@ -19,14 +19,8 @@ this is my project
 key word1, another one
 EOF
 
-echo "Generator is done, adding a few empty files"
-touch index.js
-mkdir src
-cd src
-touch foo.js
-touch foo-spec.js
-cd ..
-git add index.js
+echo "Generator is done"
+git add index.js src/*.js
 echo "Files before the commit"
 find . -maxdepth 2 | egrep -v node_modules | egrep -v .git
 git commit -m "chore(test): this is a test commit"
