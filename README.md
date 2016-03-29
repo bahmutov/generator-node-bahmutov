@@ -33,6 +33,9 @@ Answer a few questions and you should be all set.
 * Unit testing with [Mocha](http://mochajs.org/) using `npm run unit`
 * Packaged [size reporting on pre-push hook][size] using `npm run size`
 * Running [Node Security Project](https://github.com/nodesecurity/nsp) check on `pre-push`
+* Checking if you are trying to commit 
+  [sensitive files](https://github.com/bahmutov/ban-sensitive-files)
+  using `npm run ban`
 
 See `npm run` output for the full list of scripts.
 

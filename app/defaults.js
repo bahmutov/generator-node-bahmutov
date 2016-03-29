@@ -15,15 +15,20 @@ const defaults = {
     format: 'standard-format -w index.js src/*.js',
     size: 't="$(npm pack .)"; wc -c "${t}"; tar tvf "${t}"; rm "${t}";',
     issues: 'git-issues',
-    secure: 'nsp check'
+    secure: 'nsp check',
+    ban: 'ban'
   },
   config: {
     'pre-git': {
       'commit-msg': 'simple',
-      'pre-commit': ['npm test'],
+      'pre-commit': [
+        'npm test',
+        'npm run ban'
+      ],
       'pre-push': [
-        'npm run size',
-        'npm run secure'
+        'npm run secure',
+        'npm run ban -- --all',
+        'npm run size'
       ],
       'post-commit': [],
       'post-merge': []
