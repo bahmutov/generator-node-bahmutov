@@ -13,7 +13,8 @@
     "size": "t=\"$(npm pack .)\"; wc -c \"${t}\"; tar tvf \"${t}\"; rm \"${t}\";",
     "issues": "git-issues",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
-    "e2e": "./test/e2e.sh"
+    "e2e": "./test/e2e.sh",
+    "ban": "ban"
   },
   "files": [
     "app/*",
@@ -51,10 +52,12 @@
     "pre-git": {
       "commit-msg": "simple",
       "pre-commit": [
-        "npm run pretest"
+        "npm run test",
+        "npm run ban"
       ],
       "pre-push": [
         "npm run e2e",
+        "npm run ban -- --all",
         "npm run size"
       ],
       "post-commit": [],
@@ -62,6 +65,7 @@
     }
   },
   "devDependencies": {
+    "ban-sensitive-files": "1.8.2",
     "git-issues": "1.2.0",
     "mocha": "2.4.5",
     "pre-git": "3.7.1",
