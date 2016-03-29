@@ -36,6 +36,8 @@ Answer a few questions and you should be all set.
 * Checking if you are trying to commit 
   [sensitive files](https://github.com/bahmutov/ban-sensitive-files)
   using `npm run ban`
+* License check of production dependencies with 
+  [license-checker](https://www.npmjs.com/package/license-checker) using `npm run license`
 
 See `npm run` output for the full list of scripts.
 

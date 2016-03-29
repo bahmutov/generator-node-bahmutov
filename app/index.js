@@ -146,7 +146,8 @@ const g = generators.Base.extend({
       'mocha',
       'git-issues',
       'nsp',
-      'ban-sensitive-files'
+      'ban-sensitive-files',
+      'license-checker'
     ]
     this.npmInstall(devDependencies, { 'saveDev': true })
   }

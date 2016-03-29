@@ -14,7 +14,8 @@
     "issues": "git-issues",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
     "e2e": "./test/e2e.sh",
-    "ban": "ban"
+    "ban": "ban",
+    "license": "license-checker --production --onlyunknown --csv"
   },
   "files": [
     "app/*",
@@ -57,6 +58,7 @@
       ],
       "pre-push": [
         "npm run e2e",
+        "npm run license",
         "npm run ban -- --all",
         "npm run size"
       ],
@@ -67,6 +69,7 @@
   "devDependencies": {
     "ban-sensitive-files": "1.8.2",
     "git-issues": "1.2.0",
+    "license-checker": "5.1.0",
     "mocha": "2.4.5",
     "pre-git": "3.7.1",
     "semantic-release": "6.2.1",
