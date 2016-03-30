@@ -8,21 +8,23 @@ const defaults = {
     '!src/*-spec.js'
   ],
   scripts: {
-    test: 'npm run unit',
-    unit: 'mocha src/*-spec.js',
-    pretest: 'npm run format && npm run lint',
-    lint: 'standard --verbose index.js src/*.js',
-    format: 'standard-format -w index.js src/*.js',
-    size: 't="$(npm pack .)"; wc -c "${t}"; tar tvf "${t}"; rm "${t}";',
-    issues: 'git-issues',
-    secure: 'nsp check',
     ban: 'ban',
-    license: 'license-checker --production --onlyunknown --csv'
+    deps: 'deps-ok',
+    format: 'standard-format -w index.js src/*.js',
+    issues: 'git-issues',
+    license: 'license-checker --production --onlyunknown --csv',
+    lint: 'standard --verbose index.js src/*.js',
+    pretest: 'npm run format && npm run lint',
+    secure: 'nsp check',
+    size: 't="$(npm pack .)"; wc -c "${t}"; tar tvf "${t}"; rm "${t}";',
+    test: 'npm run unit',
+    unit: 'mocha src/*-spec.js'
   },
   config: {
     'pre-git': {
       'commit-msg': 'simple',
       'pre-commit': [
+        'npm run deps',
         'npm test',
         'npm run ban'
       ],

@@ -38,6 +38,8 @@ Answer a few questions and you should be all set.
   using `npm run ban`
 * License check of production dependencies with 
   [license-checker](https://www.npmjs.com/package/license-checker) using `npm run license`
+* Outdated local dependencies check with [deps-ok](https://github.com/bahmutov/deps-ok)
+  using `npm run deps`
 
 See `npm run` output for the full list of scripts.
 
