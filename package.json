@@ -15,7 +15,8 @@
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
     "e2e": "./test/e2e.sh",
     "ban": "ban",
-    "license": "license-checker --production --onlyunknown --csv"
+    "license": "license-checker --production --onlyunknown --csv",
+    "deps": "deps-ok"
   },
   "files": [
     "app/*",
@@ -53,6 +54,7 @@
     "pre-git": {
       "commit-msg": "simple",
       "pre-commit": [
+        "npm run deps",
         "npm run test",
         "npm run ban"
       ],
@@ -68,6 +70,7 @@
   },
   "devDependencies": {
     "ban-sensitive-files": "1.8.2",
+    "deps-ok": "1.1.0",
     "git-issues": "1.2.0",
     "license-checker": "5.1.0",
     "mocha": "2.4.5",
