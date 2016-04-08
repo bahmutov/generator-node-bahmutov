@@ -154,14 +154,15 @@ const g = generators.Base.extend({
   },
   installDeps: function () {
     const devDependencies = [
+      'ban-sensitive-files',
+      'deps-ok',
+      'git-issues',
+      'license-checker',
+      'mocha',
+      'nsp',
       'pre-git',
       'standard',
-      'standard-format',
-      'mocha',
-      'git-issues',
-      'nsp',
-      'ban-sensitive-files',
-      'license-checker'
+      'standard-format'
     ]
     this.npmInstall(devDependencies, { 'saveDev': true })
   }
