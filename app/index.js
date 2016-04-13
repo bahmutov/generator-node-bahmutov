@@ -164,7 +164,7 @@ const g = generators.Base.extend({
       'standard',
       'standard-format'
     ]
-    this.npmInstall(devDependencies, { 'saveDev': true })
+    this.npmInstall(devDependencies, { saveDev: true })
   }
 })
 module.exports = g
