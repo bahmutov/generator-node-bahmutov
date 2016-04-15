@@ -17,7 +17,14 @@ function isEmpty (x) {
   return x
 }
 
+function printVersion () {
+  const myPackageFilename = path.join(__dirname, '../package.json')
+  const myPackage = require(myPackageFilename)
+  console.log('using %s@%s', myPackage.name, myPackage.version)
+}
+
 const g = generators.Base.extend({
+  printVersion: printVersion,
   setDefaults: function () {
     this.answers = defaults
   },
