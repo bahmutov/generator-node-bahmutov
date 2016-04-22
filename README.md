@@ -15,7 +15,7 @@
 In a new project folder
 
     git init
-    git add remote origin <remote git>
+    git remote add origin <remote git>
     yo node-bahmutov
 
 Answer a few questions and you should be all set.
