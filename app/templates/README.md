@@ -21,7 +21,7 @@ Author: <%= author %> &copy; <%= year %>
 License: MIT - do anything with the code, but don't blame me if it does not work.
 
 Support: if you find any problems with this module, email / tweet /
-[open issue](https://github.com/<%= username %>/<%= name %>/issues) on Github
+[open issue](https://github.com/<%= username %>/<%= repoName %>/issues) on Github
 
 ## MIT License
 
@@ -50,8 +50,8 @@ OTHER DEALINGS IN THE SOFTWARE.
 
 [npm-icon]: https://nodei.co/npm/<%= name %>.png?downloads=true
 [npm-url]: https://npmjs.org/package/<%= name %>
-[ci-image]: https://travis-ci.org/<%= username %>/<%= name %>.png?branch=master
-[ci-url]: https://travis-ci.org/<%= username %>/<%= name %>
+[ci-image]: https://travis-ci.org/<%= username %>/<%= repoName %>.png?branch=master
+[ci-url]: https://travis-ci.org/<%= username %>/<%= repoName %>
 [semantic-image]: https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg
 [semantic-url]: https://github.com/semantic-release/semantic-release
 [standard-image]: https://img.shields.io/badge/code%20style-standard-brightgreen.svg

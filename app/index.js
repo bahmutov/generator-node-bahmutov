@@ -12,6 +12,7 @@ const usernameFromGithubUrl = require('./github-username')
 const defaults = require('./defaults')
 const la = require('lazy-ass')
 const is = require('check-more-types')
+const withoutScope = require('./without-scope')
 
 function isEmpty (x) {
   return x
@@ -99,6 +100,10 @@ const g = generators.Base.extend({
     this.prompt(questions, (answers) => {
       answers.keywords = answers.keywords.split(',').filter(isEmpty)
       this.answers = _.extend(defaults, answers)
+      la(is.unemptyString(this.answers.name), 'missing full name', this.answers.name)
+      this.answers.noScopeName = withoutScope(this.answers.name)
+      la(is.unemptyString(this.answers.noScopeName),
+        'could not compute name without scope from', this.answers.name)
       done()
     })
   },
@@ -112,15 +117,16 @@ const g = generators.Base.extend({
   },
   homepage: function () {
     this.answers.homepage = 'https://github.com/' + this.githubUsername +
-      '/' + this.answers.name + '#readme'
+      '/' + this.answers.noScopeName + '#readme'
   },
   bugs: function () {
     this.answers.bugs = 'https://github.com/' + this.githubUsername +
-      '/' + this.answers.name + '/issues'
+      '/' + this.answers.noScopeName + '/issues'
   },
   copyReadme: function () {
     const readmeContext = {
       name: this.answers.name,
+      repoName: this.answers.noScopeName,
       description: this.answers.description,
       author: this.answers.author,
       year: (new Date()).getFullYear(),
@@ -138,7 +144,7 @@ const g = generators.Base.extend({
       this.templatePath('index.js'),
       this.destinationPath('index.js')
     )
-    const name = _.kebabCase(this.answers.name)
+    const name = _.kebabCase(this.answers.noScopeName)
     const specFilename = path.join('src', name + '-spec.js')
     this.fs.copy(
       this.templatePath('spec.js'),

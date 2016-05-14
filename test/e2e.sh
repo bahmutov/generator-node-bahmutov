@@ -14,7 +14,7 @@ git remote add origin git@github.com:bahmutov/test-node-generator.git
 
 echo "Running yeoman"
 yo node-bahmutov --force <<EOF
-test-project
+@org/test-project
 this is my project
 key word1, another one
 EOF
