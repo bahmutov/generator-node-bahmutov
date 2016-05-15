@@ -20,7 +20,7 @@ key word1, another one
 EOF
 
 echo "Generator is done"
-git add index.js src/*.js
+git add src/*.js
 echo "Files before the commit"
 find . -maxdepth 2 | egrep -v node_modules | egrep -v .git
 git commit -m "chore(test): this is a test commit"
@@ -28,4 +28,4 @@ git commit -m "chore(test): this is a test commit"
 ls -la
 git log --oneline
 git show
-echo "All done testing generator"
+echo "All done testing generator in $folder"

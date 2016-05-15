@@ -142,7 +142,7 @@ const g = generators.Base.extend({
   copySourceFiles: function () {
     this.fs.copy(
       this.templatePath('index.js'),
-      this.destinationPath('index.js')
+      this.destinationPath('src/index.js')
     )
     const name = _.kebabCase(this.answers.noScopeName)
     const specFilename = path.join('src', name + '-spec.js')

@@ -1,19 +1,18 @@
 const defaults = {
   version: '1.0.0',
-  main: 'index.js',
+  main: 'src/',
   license: 'MIT',
   files: [
-    'index.js',
     'src/*.js',
     '!src/*-spec.js'
   ],
   scripts: {
     ban: 'ban',
     deps: 'deps-ok',
-    format: 'standard-format -w index.js src/*.js',
+    format: 'standard-format -w src/*.js',
     issues: 'git-issues',
     license: 'license-checker --production --onlyunknown --csv',
-    lint: 'standard --verbose index.js src/*.js',
+    lint: 'standard --verbose src/*.js',
     pretest: 'npm run format && npm run lint',
     secure: 'nsp check',
     size: 't="$(npm pack .)"; wc -c "${t}"; tar tvf "${t}"; rm "${t}";',
