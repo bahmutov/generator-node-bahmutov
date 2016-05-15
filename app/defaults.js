@@ -40,6 +40,9 @@ const defaults = {
       'post-merge': []
     }
   },
+  'publishConfig': {
+    registry: 'http://registry.npmjs.org/'
+  },
   homepage: '',
   bugs: ''
 }
