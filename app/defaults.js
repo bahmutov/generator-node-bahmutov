@@ -6,6 +6,9 @@ const defaults = {
     'src/*.js',
     '!src/*-spec.js'
   ],
+  engines: {
+    node: '>=6'
+  },
   scripts: {
     ban: 'ban',
     deps: 'deps-ok',
