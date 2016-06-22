@@ -26,6 +26,7 @@ const defaults = {
     'pre-git': {
       'commit-msg': 'simple',
       'pre-commit': [
+        'npm prune',
         'npm run deps',
         'npm test',
         'npm run ban'
