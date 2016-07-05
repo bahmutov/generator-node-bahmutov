@@ -120,9 +120,9 @@ WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
 OTHER DEALINGS IN THE SOFTWARE.
 
-[generator-node-bahmutov-icon]: https://nodei.co/npm/generator-node-bahmutov.png?downloads=true
+[generator-node-bahmutov-icon]: https://nodei.co/npm/generator-node-bahmutov.svg?downloads=true
 [generator-node-bahmutov-url]: https://npmjs.org/package/generator-node-bahmutov
-[generator-node-bahmutov-ci-image]: https://travis-ci.org/bahmutov/generator-node-bahmutov.png?branch=master
+[generator-node-bahmutov-ci-image]: https://travis-ci.org/bahmutov/generator-node-bahmutov.svg?branch=master
 [generator-node-bahmutov-ci-url]: https://travis-ci.org/bahmutov/generator-node-bahmutov
 [semantic-image]: https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg
 [semantic-url]: https://github.com/semantic-release/semantic-release
