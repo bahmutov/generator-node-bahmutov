@@ -1,6 +1,6 @@
 const la = require('lazy-ass')
 const is = require('check-more-types')
-const parse = require('@bahmutov/parse-github-repo-url')
+const parse = require('parse-github-repo-url')
 
 // parses url like git@github.com:bahmutov/test-node-generator.git
 // to get the username

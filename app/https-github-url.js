@@ -1,6 +1,6 @@
 const la = require('lazy-ass')
 const is = require('check-more-types')
-const parse = require('@bahmutov/parse-github-repo-url')
+const parse = require('parse-github-repo-url')
 
 function formHttpsGithubUrl (user, repo) {
   return `https://github.com/${user}/${repo}.git`
