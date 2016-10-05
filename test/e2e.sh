@@ -20,7 +20,7 @@ key word1, another one
 EOF
 
 echo "Generator is done"
-git add src/*.js
+git add src/*.js .gitignore .npmrc README.md package.json
 echo "Files before the commit"
 find . -maxdepth 2 | egrep -v node_modules | egrep -v .git
 git commit -m "chore(test): this is a test commit"
