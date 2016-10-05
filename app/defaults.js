@@ -12,11 +12,10 @@ const defaults = {
   scripts: {
     ban: 'ban',
     deps: 'deps-ok',
-    format: 'standard-format -w src/*.js',
     issues: 'git-issues',
     license: 'license-checker --production --onlyunknown --csv',
-    lint: 'standard --verbose src/*.js',
-    pretest: 'npm run format && npm run lint',
+    lint: 'standard --verbose --fix src/*.js',
+    pretest: 'npm run lint',
     secure: 'nsp check',
     size: 't="$(npm pack .)"; wc -c "${t}"; tar tvf "${t}"; rm "${t}";',
     test: 'npm run unit',

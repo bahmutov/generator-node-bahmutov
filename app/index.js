@@ -174,8 +174,7 @@ const g = generators.Base.extend({
       'mocha',
       'nsp',
       'pre-git',
-      'standard',
-      'standard-format'
+      'standard'
     ]
     this.npmInstall(devDependencies, { saveDev: true })
   }
