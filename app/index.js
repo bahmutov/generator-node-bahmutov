@@ -168,6 +168,7 @@ const g = generators.Base.extend({
   installDeps: function () {
     const devDependencies = [
       'ban-sensitive-files',
+      'dependency-check',
       'deps-ok',
       'git-issues',
       'license-checker',

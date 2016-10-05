@@ -26,19 +26,21 @@ Answer a few questions and you should be all set.
 * Assumes single `index.js` and `src` folder
 * Default `.npmrc` and `.gitignore` files
 * Git hooks and message validation using [pre-git](https://github.com/bahmutov/pre-git)
-* Linting and auto formatting using [standard](http://standardjs.com/) and 
+* Linting and auto formatting using [standard](http://standardjs.com/) and
   [standard-format](https://github.com/maxogden/standard-format) using `npm run lint`
-* Showing open Git issues via 
-  [git-issues](https://github.com/softwarescales/git-issues) using `npm run issues` 
+* Showing open Git issues via
+  [git-issues](https://github.com/softwarescales/git-issues) using `npm run issues`
 * Unit testing with [Mocha](http://mochajs.org/) using `npm run unit`
 * Packaged [size reporting on pre-push hook][size] using `npm run size`
 * Running [Node Security Project](https://github.com/nodesecurity/nsp) check on `pre-push`
-* Checking if you are trying to commit 
+* Checking if you are trying to commit
   [sensitive files](https://github.com/bahmutov/ban-sensitive-files)
   using `npm run ban`
-* License check of production dependencies with 
+* License check of production dependencies with
   [license-checker](https://www.npmjs.com/package/license-checker) using `npm run license`
-* Outdated local dependencies check with [deps-ok](https://github.com/bahmutov/deps-ok)
+* Outdated and missing local dependencies check with
+  [deps-ok](https://github.com/bahmutov/deps-ok) and
+  [dependency-check](https://www.npmjs.com/package/dependency-check)
   using `npm run deps`
 
 See `npm run` output for the full list of scripts.
@@ -47,7 +49,7 @@ See `npm run` output for the full list of scripts.
 
 ## Recommended
 
-I recommend installing [semantic release](https://github.com/semantic-release/semantic-release) 
+I recommend installing [semantic release](https://github.com/semantic-release/semantic-release)
 right away after bootstrapping the project, it will work nicely with the commit message format.
 We already include the semantic release badge in the generated README file, so you have no
 excuse
