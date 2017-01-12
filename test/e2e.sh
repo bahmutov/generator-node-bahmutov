@@ -34,4 +34,12 @@ git commit -m "chore(test): this is a test commit"
 ls -la
 git log --oneline
 # git show
+
+echo "Testing Dockerfile generation"
+yo node-bahmutov:docker
+git status
+git add Dockerfile
+git commit -m "chore(docker): generate Dockerfile"
+git log --oneline
+
 echo "All done testing generator in $folder"

@@ -17,7 +17,9 @@ const defaults = {
     lint: 'standard --verbose --fix src/*.js',
     pretest: 'npm run lint',
     secure: 'nsp check',
+    /* eslint-disable */
     size: 't="$(npm pack .)"; wc -c "${t}"; tar tvf "${t}"; rm "${t}";',
+    /* eslint-enable */
     test: 'npm run unit',
     unit: 'mocha src/*-spec.js'
   },

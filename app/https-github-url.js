@@ -13,7 +13,7 @@ function usernameFromGithubUrl (url) {
     return url
   }
 
-  la (/^git@/.test(url), 'not git@ url', url)
+  la(/^git@/.test(url), 'not git@ url', url)
   const parsed = parse(url)
   la(is.array(parsed), 'could not parse git url', url)
   const user = parsed[0]

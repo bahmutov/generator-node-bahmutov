@@ -8,7 +8,7 @@
     "commit": "commit-wizard",
     "pretest": "npm run lint",
     "unit": "mocha app/*-spec.js",
-    "lint": "standard --verbose --fix app/index.js",
+    "lint": "standard --verbose --fix app/*.js docker/*.js",
     "size": "t=\"$(npm pack .)\"; wc -c \"${t}\"; tar tvf \"${t}\"; rm \"${t}\";",
     "issues": "git-issues",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
@@ -19,6 +19,7 @@
   },
   "files": [
     "app/*",
+    "docker/*",
     "!app/*-spec.js"
   ],
   "preferGlobal": true,
