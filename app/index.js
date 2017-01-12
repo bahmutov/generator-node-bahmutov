@@ -1,7 +1,7 @@
 'use strict'
 
 const debug = require('debug')('gen')
-const generators = require('yeoman-generator')
+const Generator = require('yeoman-generator')
 const _ = require('lodash')
 const originUrl = require('git-remote-origin-url')
 const fs = require('fs')
@@ -18,30 +18,39 @@ function isEmpty (x) {
   return x
 }
 
-function printVersion () {
+function _printVersion () {
   const myPackageFilename = path.join(__dirname, '../package.json')
   const myPackage = require(myPackageFilename)
   console.log('using %s@%s', myPackage.name, myPackage.version)
 }
 
-const g = generators.Base.extend({
-  printVersion: printVersion,
-  setDefaults: function () {
+const g = class extends Generator {
+  printVersion () {
+    _printVersion()
+  }
+
+  setDefaults () {
     this.answers = defaults
-  },
-  copyNpmrc: function () {
+  }
+
+  copyNpmrc () {
+    debug('Copying .npmrc file')
     this.fs.copy(
       this.templatePath('npmrc'),
       this.destinationPath('.npmrc')
     )
-  },
-  copyGitignore: function () {
+  }
+
+  copyGitignore () {
+    debug('Copying .gitignore file')
     this.fs.copy(
       this.templatePath('gitignore'),
       this.destinationPath('.gitignore')
     )
-  },
-  git: function git () {
+  }
+
+  git () {
+    debug('Looking for .git folder')
     const exists = require('fs').existsSync
     if (!exists('.git')) {
       console.error('Cannot find .git folder, please initialize the Git repo first')
@@ -49,8 +58,10 @@ const g = generators.Base.extend({
       console.error('git remote add origin ...')
       process.exit(-1)
     }
-  },
-  gitOrigin: function gitOrigin () {
+  }
+
+  gitOrigin () {
+    debug('Getting Git origin url')
     const toHttps = require('./https-github-url')
     const done = this.async()
     originUrl().then((url) => {
@@ -63,13 +74,15 @@ const g = generators.Base.extend({
       console.error(err)
       process.exit(-1)
     })
-  },
-  author: function author () {
+  }
+
+  author () {
     this.answers = _.extend(this.answers, {
       author: this.user.git.name() + ' <' + this.user.git.email() + '>'
     })
-  },
-  githubUsername: function githubUsername () {
+  }
+
+  githubUsername () {
     // HACK, cannot get github username reliably from email
     // hitting api rate limits
     // parse github url instead
@@ -77,9 +90,20 @@ const g = generators.Base.extend({
     debug('got github username', this.githubUsername)
     console.assert(this.githubUsername,
       'Could not get github username from url ' + this.originUrl)
-  },
-  projectName: function () {
-    const done = this.async()
+  }
+
+  _recordAnswers (answers) {
+    answers.keywords = answers.keywords.split(',').filter(isEmpty)
+    this.answers = _.extend(defaults, answers)
+    la(is.unemptyString(this.answers.name), 'missing full name', this.answers.name)
+    this.answers.noScopeName = withoutScope(this.answers.name)
+    la(is.unemptyString(this.answers.noScopeName),
+      'could not compute name without scope from', this.answers.name)
+    debug('got answers to my questions')
+  }
+
+  projectName () {
+    debug('getting project name and other details')
     const questions = [{
       type: 'input',
       name: 'name',
@@ -97,33 +121,34 @@ const g = generators.Base.extend({
       message: 'Comma separated keywords',
       store: false
     }]
-    this.prompt(questions, (answers) => {
-      answers.keywords = answers.keywords.split(',').filter(isEmpty)
-      this.answers = _.extend(defaults, answers)
-      la(is.unemptyString(this.answers.name), 'missing full name', this.answers.name)
-      this.answers.noScopeName = withoutScope(this.answers.name)
-      la(is.unemptyString(this.answers.noScopeName),
-        'could not compute name without scope from', this.answers.name)
-      done()
-    })
-  },
-  repo: function repo () {
+    return this.prompt(questions)
+      .then(this._recordAnswers.bind(this))
+  }
+
+  repo () {
+    debug('getting repo details')
     this.answers = _.extend(this.answers, {
       repository: {
         type: 'git',
         url: this.originUrl
       }
     })
-  },
-  homepage: function () {
+  }
+
+  homepage () {
     this.answers.homepage = 'https://github.com/' + this.githubUsername +
       '/' + this.answers.noScopeName + '#readme'
-  },
-  bugs: function () {
+    debug('home is', this.answers.homepage)
+  }
+
+  bugs () {
     this.answers.bugs = 'https://github.com/' + this.githubUsername +
       '/' + this.answers.noScopeName + '/issues'
-  },
-  copyReadme: function () {
+    debug('bugs url is', this.answers.bugs)
+  }
+
+  copyReadme () {
+    debug('copying readme')
     const readmeContext = {
       name: this.answers.name,
       repoName: this.answers.noScopeName,
@@ -138,8 +163,10 @@ const g = generators.Base.extend({
       this.destinationPath('README.md'),
       readmeContext
     )
-  },
-  copySourceFiles: function () {
+  }
+
+  copySourceFiles () {
+    debug('copying source files')
     this.fs.copy(
       this.templatePath('index.js'),
       this.destinationPath('src/index.js')
@@ -151,21 +178,26 @@ const g = generators.Base.extend({
       this.destinationPath(specFilename)
     )
     debug('copied index.js and', specFilename)
-  },
-  report: function () {
+  }
+
+  report () {
     debug('all values')
     debug(JSON.stringify(this.answers, null, 2))
-  },
-  writePackage: function writePackage () {
+  }
+
+  writePackage () {
     debug('writing package.json file')
     const str = JSON.stringify(this.answers, null, 2) + '\n'
     fs.writeFileSync(packageFilename, str, 'utf8')
-  },
-  fixpack: function () {
+  }
+
+  fixpack () {
     debug('fixing package.json')
     fixpack(packageFilename)
-  },
-  installDeps: function () {
+  }
+
+  installDeps () {
+    debug('installing dependencies')
     const devDependencies = [
       'ban-sensitive-files',
       'dependency-check',
@@ -179,5 +211,6 @@ const g = generators.Base.extend({
     ]
     this.npmInstall(devDependencies, { saveDev: true })
   }
-})
+}
+
 module.exports = g
