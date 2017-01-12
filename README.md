@@ -80,7 +80,10 @@ Run the generator with environment variable DEBUG set to "gen"
 
 ## Development
 
-Following [the instructions](http://yeoman.io/authoring/index.html)
+Following [the instructions](http://yeoman.io/authoring/index.html).
+This module also reads answers to user questions from file `answers.json`
+if found in the current working directory. An example file is
+[test/answers.json](test/answers.json).
 
 ### Small print
 

@@ -5,6 +5,7 @@ const Generator = require('yeoman-generator')
 const _ = require('lodash')
 const originUrl = require('git-remote-origin-url')
 const fs = require('fs')
+const exists = fs.existsSync
 const path = require('path')
 const fixpack = require('fixpack')
 const packageFilename = 'package.json'
@@ -51,7 +52,6 @@ const g = class extends Generator {
 
   git () {
     debug('Looking for .git folder')
-    const exists = require('fs').existsSync
     if (!exists('.git')) {
       console.error('Cannot find .git folder, please initialize the Git repo first')
       console.error('git init')
@@ -93,6 +93,12 @@ const g = class extends Generator {
   }
 
   _recordAnswers (answers) {
+    la(is.unemptyString(answers.name), 'missing name', answers)
+    la(is.maybe.unemptyString(answers.description),
+      'invalid description', answers)
+    la(is.maybe.unemptyString(answers.keywords),
+      'invalid keywords', answers)
+
     answers.keywords = answers.keywords.split(',').filter(isEmpty)
     this.answers = _.extend(defaults, answers)
     la(is.unemptyString(this.answers.name), 'missing full name', this.answers.name)
@@ -102,8 +108,25 @@ const g = class extends Generator {
     debug('got answers to my questions')
   }
 
+  _readAnswersFromFile (filename) {
+    la(is.unemptyString(filename), 'missing answers filename', filename)
+    la(exists(filename), 'cannot find file', filename)
+    la(is.isJson(filename), 'answers file should be JSON', filename)
+    const answers = require(filename)
+    return Promise.resolve(answers)
+  }
+
   projectName () {
     debug('getting project name and other details')
+    const recordAnswers = this._recordAnswers.bind(this)
+
+    const answersFilename = path.join(process.cwd(), 'answers.json')
+    if (exists(answersFilename)) {
+      debug('reading answers from file', answersFilename)
+      return this._readAnswersFromFile(answersFilename)
+        .then(recordAnswers)
+    }
+
     const questions = [{
       type: 'input',
       name: 'name',
@@ -122,7 +145,7 @@ const g = class extends Generator {
       store: false
     }]
     return this.prompt(questions)
-      .then(this._recordAnswers.bind(this))
+      .then(recordAnswers)
   }
 
   repo () {
