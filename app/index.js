@@ -67,6 +67,8 @@ const g = class extends Generator {
     originUrl().then((url) => {
       la(is.unemptyString(url), 'could not get github origin url')
       debug('got remote origin url', url)
+      this.repoDomain = remoteGitUtils.getDomain(url)
+      debug('repo domain', this.repoDomain)
       this.originUrl = remoteGitUtils.gitRemoteToHttps(url)
       debug('git origin HTTPS url', this.originUrl)
       done()
@@ -160,14 +162,22 @@ const g = class extends Generator {
   }
 
   homepage () {
-    this.answers.homepage = 'https://github.com/' + this.githubUsername +
-      '/' + this.answers.noScopeName + '#readme'
+    const domain = this.repoDomain
+    const user = this.githubUsername
+    const name = this.answers.noScopeName
+    this.answers.homepage = `https://${domain}/${user}/${name}#readme`
+    la(is.strings([domain, user, name]),
+      'missing information to construct homepage url', this.answers.homepage)
     debug('home is', this.answers.homepage)
   }
 
   bugs () {
-    this.answers.bugs = 'https://github.com/' + this.githubUsername +
-      '/' + this.answers.noScopeName + '/issues'
+    const domain = this.repoDomain
+    const user = this.githubUsername
+    const name = this.answers.noScopeName
+    this.answers.bugs = `https://${domain}/${user}/${name}/issues`
+    la(is.strings([domain, user, name]),
+      'missing information to construct bugs url', this.answers.bugs)
     debug('bugs url is', this.answers.bugs)
   }
 
@@ -211,7 +221,7 @@ const g = class extends Generator {
 
   writePackage () {
     debug('writing package.json file')
-    const clean = _.omit(this.answers, 'noScopeName')
+    const clean = _.omit(this.answers, ['noScopeName', 'repoDomain'])
     const str = JSON.stringify(clean, null, 2) + '\n'
     fs.writeFileSync(packageFilename, str, 'utf8')
   }
