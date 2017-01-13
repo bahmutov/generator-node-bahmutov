@@ -245,9 +245,21 @@ const g = class extends Generator {
       'standard'
     ]
     const installOptions = {
-      saveDev: true
+      saveDev: true,
+      depth: 0
     }
     this.npmInstall(devDependencies, installOptions)
+  }
+
+  printSemanticReleaseAdvice () {
+    if (remoteGitUtils.isGithub(this.originUrl)) {
+      console.log('Please consider using semantic release to publish to NPM')
+      console.log('  npm i -g semantic-release-cli')
+      console.log('  semantic-release-cli setup')
+    } else if (remoteGitUtils.isGitlab(this.originUrl)) {
+      console.log('Please consider using semantic release to publish to NPM')
+      console.log('See https://gitlab.com/hyper-expanse/semantic-release-gitlab')
+    }
   }
 }
 

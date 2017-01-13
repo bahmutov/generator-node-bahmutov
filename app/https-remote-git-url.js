@@ -57,6 +57,8 @@ function gitRemoteToHttps (url) {
 
 module.exports = {
   isGitAt,
+  isGithub,
+  isGitlab,
   gitRemoteToHttps,
   getDomain
 }
