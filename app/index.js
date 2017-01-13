@@ -210,7 +210,8 @@ const g = class extends Generator {
 
   writePackage () {
     debug('writing package.json file')
-    const str = JSON.stringify(this.answers, null, 2) + '\n'
+    const clean = _.omit(this.answers, 'noScopeName')
+    const str = JSON.stringify(clean, null, 2) + '\n'
     fs.writeFileSync(packageFilename, str, 'utf8')
   }
 
