@@ -14,7 +14,7 @@ const defaults = require('./defaults')
 const la = require('lazy-ass')
 const is = require('check-more-types')
 const withoutScope = require('./without-scope')
-const toHttps = require('./https-remote-git-url')
+const remoteGitUtils = require('./https-remote-git-url')
 
 function isEmpty (x) {
   return x
@@ -67,7 +67,7 @@ const g = class extends Generator {
     originUrl().then((url) => {
       la(is.unemptyString(url), 'could not get github origin url')
       debug('got remote origin url', url)
-      this.originUrl = toHttps(url)
+      this.originUrl = remoteGitUtils.gitRemoteToHttps(url)
       debug('git origin HTTPS url', this.originUrl)
       done()
     }).catch((err) => {
