@@ -1,0 +1,6 @@
+# files to NOT copy into the docker container during build
+# see documentation at
+# https://docs.docker.com/engine/reference/builder/#/dockerignore-file
+
+node_modules
+npm_debug.log

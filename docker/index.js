@@ -30,6 +30,14 @@ const g = class extends Generator {
     )
   }
 
+  copyDockerignore () {
+    debug('Copying .dockerignore file')
+    this.fs.copy(
+      this.templatePath('dockerignore'),
+      this.destinationPath('.dockerignore')
+    )
+  }
+
   goodbye () {
     console.log('Generated default Dockerfile')
   }
