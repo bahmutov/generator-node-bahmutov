@@ -6,4 +6,6 @@ const server = micro(function (req, res) {
   res.writeHead(200)
   res.end('Hello world\n\n')
 })
-server.listen(process.env.PORT || 1337)
+const port = process.env.PORT || 1337
+server.listen(port)
+console.log('server listening at port', port)

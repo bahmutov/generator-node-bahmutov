@@ -8,6 +8,18 @@ const join = require('path').join
 const la = require('lazy-ass')
 const is = require('check-more-types')
 
+function addCommand (scripts, name, cmd) {
+  la(is.object(scripts), 'missing package scripts object', scripts)
+  la(is.unemptyString(cmd), 'missing command to add', cmd)
+
+  if (!scripts[name]) {
+    scripts[name] = cmd
+    console.log('added %s command to package.json', name)
+    return 1
+  }
+  return 0
+}
+
 const g = class extends Generator {
   constructor (args, opts) {
     super(args, opts)
@@ -47,46 +59,33 @@ const g = class extends Generator {
   addPackageScriptCommands () {
     la(is.unemptyString(this.name), 'missing project name')
 
-    if (exists(this.pkgFilename)) {
-      debug('Adding docker script commands to package.json')
-      const pkg = require(this.pkgFilename)
-      let changed
-
-      if (!pkg.scripts) {
-        pkg.scripts = {}
-      }
-
-      const buildCommandName = 'docker-build'
-      if (!pkg.scripts[buildCommandName]) {
-        const cmd = `docker build -t ${this.name} .`
-        pkg.scripts[buildCommandName] = cmd
-        changed = true
-        console.log('added %s command to package.json', buildCommandName)
-      }
-
-      const runCommandName = 'docker-run'
-      if (!pkg.scripts[runCommandName]) {
-        const cmd = `docker run --name ${this.name} -p 5000:1337 -d ${this.name}`
-        pkg.scripts[runCommandName] = cmd
-        changed = true
-        console.log('added %s command to package.json', runCommandName)
-      }
-
-      const stopCommandName = 'docker-stop'
-      if (!pkg.scripts[stopCommandName]) {
-        const cmd = `docker stop ${this.name} && docker rm ${this.name} || true`
-        pkg.scripts[stopCommandName] = cmd
-        changed = true
-        console.log('added %s command to package.json', stopCommandName)
-      }
-
-      if (changed) {
-        const text = JSON.stringify(pkg, null, 2) + '\n'
-        fs.writeFileSync(this.pkgFilename, text, 'utf8')
-        console.log('saved package.json file')
-      }
-    } else {
+    if (!exists(this.pkgFilename)) {
       debug('Cannot find package.json, cannot add docker script commands')
+      return
+    }
+
+    debug('Adding docker script commands to package.json')
+    const pkg = require(this.pkgFilename)
+
+    if (!pkg.scripts) {
+      pkg.scripts = {}
+    }
+
+    const add = addCommand.bind(null, pkg.scripts)
+
+    let changes = 0
+    changes += add('docker-build', `docker build -t ${this.name} .`)
+    changes += add('docker-run',
+      `docker run --name ${this.name} -p 5000:1337 -d ${this.name}`)
+    changes += add('docker-stop',
+      `docker stop ${this.name} && docker rm ${this.name} || true`)
+    changes += add('docker-full-restart',
+      'npm run docker-stop && npm run docker-build && npm run docker-run')
+
+    if (changes) {
+      const text = JSON.stringify(pkg, null, 2) + '\n'
+      fs.writeFileSync(this.pkgFilename, text, 'utf8')
+      console.log('saved package.json file')
     }
   }
 
