@@ -69,6 +69,9 @@ Node projects inside a docker container. Based on
 
     yo node-bahmutov:docker
 
+This generator also adds `docker-*` commands to the `package.json` to build
+the image, run and stop the container.
+
 ## Test
 
 Change into an empty folder, for example
