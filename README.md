@@ -78,7 +78,9 @@ Change into an empty folder, for example
     cd test-generator
     yo node-bahmutov
 
-Or just run `npm run e2e` (assumes global `yo` install)
+Or just run `npm run e2e` (assumes global `yo` install). The go into the
+folder `/tmp/test-node-generator` and run the project. You can even
+build the Docker image and try running the project inside the container.
 
 ## Debugging
 

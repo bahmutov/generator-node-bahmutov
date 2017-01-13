@@ -3,6 +3,8 @@ set e+x
 echo "Linking current generator package"
 npm link
 
+sourceFolder=$PWD
+
 echo "Creating test folder"
 folder=/tmp/test-node-generator
 rm -rf $folder
@@ -21,9 +23,12 @@ git remote add origin git@github.com:bahmutov/test-node-generator.git
 
 echo "Running yeoman, expect to read answers from file"
 yo node-bahmutov
-
-echo "Generator is done"
 rm answers.json
+echo "Generator is done"
+
+echo "Making a microservice"
+npm i -S micro@6.1.0
+cp $sourceFolder/test/index.js src/index.js
 git add src/*.js .gitignore .npmrc README.md package.json
 echo "Files before the commit"
 find . -maxdepth 2 | egrep -v node_modules | egrep -v .git

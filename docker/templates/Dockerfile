@@ -27,8 +27,8 @@ RUN npm install --production --quiet
 # Copy our source into container
 COPY src /home/nodejs/<%= name %>/src
 
-# If our server uses 1337 by default
-# expose it from Docker container
+# tell the server what port to use
+ENV PORT 1337
 EXPOSE 1337
 
 # We are running in production environment
@@ -37,6 +37,9 @@ ENV NODE_ENV production
 # Finally start the container command
 CMD ["node", "src"]
 
-# build: docker build -t <%= name %> .
-# run:   docker run --name <%= name %> -p 5000:1337 -d <%= name %>
-# then hit the service at localhost:5000
+# build:  docker build -t <%= name %> .
+# run:    docker run --name <%= name %> -p 5000:1337 -d <%= name %>
+#         curl localhost:5000
+# stop and remove container
+#         docker stop <%= name %>
+#         docker rm <%= name %>
