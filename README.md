@@ -72,8 +72,15 @@ Node projects inside a docker container. Based on
 This generator also adds `docker-*` commands to the `package.json` to build
 the image, run and stop the container.
 
-Note: the docker image will have
-[Yelp/dumb-init](https://github.com/Yelp/dumb-init) as default PID 1 process.
+### Generated docker image features
+
+* Runs Node application as a dedicated user (for security) with production
+  environment set
+* Exposes port 1337 and sets the image environment variable `PORT`
+* Uses [Yelp/dumb-init](https://github.com/Yelp/dumb-init) as default
+  PID 1 process
+
+You can see the full [Dockerfile](docker/templates/Dockerfile) template.
 
 ## Test
 
