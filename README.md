@@ -72,6 +72,9 @@ Node projects inside a docker container. Based on
 This generator also adds `docker-*` commands to the `package.json` to build
 the image, run and stop the container.
 
+Note: the docker image will have
+[Yelp/dumb-init](https://github.com/Yelp/dumb-init) as default PID 1 process.
+
 ## Test
 
 Change into an empty folder, for example

@@ -18,6 +18,12 @@ USER nodejs
 RUN mkdir -p /home/nodejs/<%= name %>
 WORKDIR /home/nodejs/<%= name %>
 
+# install small process to handle signals
+# https://github.com/Yelp/dumb-init
+# https://blog.phusion.nl/2015/01/20/docker-and-the-pid-1-zombie-reaping-problem/
+RUN wget -O dumb-init https://github.com/Yelp/dumb-init/releases/download/v1.2.0/dumb-init_1.2.0_amd64
+RUN chmod +x dumb-init
+
 # Copy .npm settings and package.json into container
 COPY package.json /home/nodejs/<%= name %>
 COPY .npmrc /home/nodejs/<%= name %>
@@ -35,7 +41,7 @@ EXPOSE 1337
 ENV NODE_ENV production
 
 # Finally start the container command
-CMD ["node", "src"]
+CMD ["./dumb-init", "node", "src"]
 
 # build:  docker build -t <%= name %> .
 # run:    docker run --name <%= name %> -p 5000:1337 -d <%= name %>

@@ -43,7 +43,7 @@ git log --oneline
 echo "Testing Dockerfile generation"
 yo node-bahmutov:docker
 git status
-git add Dockerfile .dockerignore
+git add Dockerfile .dockerignore package.json
 git commit -m "chore(docker): generate Dockerfile"
 git log --oneline
 
