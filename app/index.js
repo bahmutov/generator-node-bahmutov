@@ -232,7 +232,10 @@ const g = class extends Generator {
       'pre-git',
       'standard'
     ]
-    this.npmInstall(devDependencies, { saveDev: true })
+    const installOptions = {
+      saveDev: true
+    }
+    this.npmInstall(devDependencies, installOptions)
   }
 }
 
