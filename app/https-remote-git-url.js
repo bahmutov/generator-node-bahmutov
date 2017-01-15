@@ -1,6 +1,7 @@
 const la = require('lazy-ass')
 const is = require('check-more-types')
 const parse = require('parse-github-repo-url')
+const url = require('url')
 
 function formHttpsGithubUrl (domain, user, repo) {
   return `https://${domain}/${user}/${repo}.git`
@@ -18,11 +19,22 @@ function isGitAt (url) {
 }
 
 // extracts domain from git@<domain>:...
-function getDomain (url) {
-  la(isGitAt(url), 'expected git@ remote url', url)
-  const from = url.indexOf('@')
-  const to = url.indexOf(':')
-  return url.substr(from + 1, to - from - 1)
+function getDomainFromGitAt (s) {
+  la(isGitAt(s), 'expected git@ remote url', s)
+  const from = s.indexOf('@')
+  const to = s.indexOf(':')
+  return s.substr(from + 1, to - from - 1)
+}
+
+// extracts domain from https://...
+function getDomainFromUrl (s) {
+  la(is.https(s), 'expected https:// url', s)
+  const parsed = url.parse(s)
+  return parsed.host
+}
+
+function getDomain (s) {
+  return isGitAt(s) ? getDomainFromGitAt(s) : getDomainFromUrl(s)
 }
 
 // transforms git ssh to https
