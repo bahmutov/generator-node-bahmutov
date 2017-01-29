@@ -1,7 +1,9 @@
 'use strict'
 
 /* global describe, it */
-describe('empty test suite', () => {
+describe('<%= name %>', () => {
+  const <%= nameVar %> = require('.')
   it('write this test', () => {
+    console.assert(<%= nameVar %>, 'should export something')
   })
 })

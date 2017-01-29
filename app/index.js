@@ -207,9 +207,14 @@ const g = class extends Generator {
     )
     const name = _.kebabCase(this.answers.noScopeName)
     const specFilename = path.join('src', name + '-spec.js')
-    this.fs.copy(
+    const info = {
+      name: this.answers.name,
+      nameVar: _.camelCase(this.answers.noScopeName)
+    }
+    this.fs.copyTpl(
       this.templatePath('spec.js'),
-      this.destinationPath(specFilename)
+      this.destinationPath(specFilename),
+      info
     )
     debug('copied index.js and', specFilename)
   }
