@@ -11,13 +11,11 @@
 ### Small print
 
 Author: <%= author %> &copy; <%= year %>
-
 <%if (username === 'bahmutov') { %>
 * [@bahmutov](https://twitter.com/bahmutov)
-* [glebbahmutov.com](http://glebbahmutov.com)
-* [blog](http://glebbahmutov.com/blog)
+* [glebbahmutov.com](https://glebbahmutov.com)
+* [blog](https://glebbahmutov.com/blog)
 <% } %>
-
 License: MIT - do anything with the code, but don't blame me if it does not work.
 
 Support: if you find any problems with this module, email / tweet /
