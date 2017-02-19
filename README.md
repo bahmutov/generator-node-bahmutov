@@ -42,6 +42,8 @@ Answer a few questions and you should be all set.
   [deps-ok](https://github.com/bahmutov/deps-ok) and
   [dependency-check](https://www.npmjs.com/package/dependency-check)
   using `npm run deps`
+* Docker file generation ([optional](#generating-dockerfile))
+* Semantic release setup ([optional](#semantic-release))
 
 See `npm run` output for the full list of scripts.
 
@@ -88,6 +90,20 @@ the image, run and stop the container.
   PID 1 process
 
 You can see the full [Dockerfile](docker/templates/Dockerfile) template.
+
+## Semantic release
+
+You can setup [semantic-release](https://github.com/semantic-release/semantic-release)
+and include useful plugins like
+[simple-commit-message](https://github.com/bahmutov/simple-commit-message)
+and [dont-crack](https://github.com/bahmutov/dont-crack)
+by running
+
+    yo node-bahmutov:release
+
+Assumes you have global `semantic-release-cli` tool already preset, if not
+
+    npm install --global semantic-release-cli
 
 ## Test
 
