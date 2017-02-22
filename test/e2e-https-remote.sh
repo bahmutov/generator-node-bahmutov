@@ -28,7 +28,7 @@ rm answers.json
 echo "Generator is done"
 
 echo "Making a microservice"
-npm i -S micro@6.1.0
+npm i -S micro@6.1.0 freeport-promise
 cp $sourceFolder/test/index.js src/index.js
 git add src/*.js .gitignore .npmrc README.md package.json
 echo "Files before the commit"
