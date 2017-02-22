@@ -8,6 +8,16 @@
 [![semantic-release][semantic-image] ][semantic-url]
 [![js-standard-style][standard-image]][standard-url]
 
+## Install
+
+Requires [Node](https://nodejs.org/en/) version 6 or above.
+
+```sh
+npm install --save <%= name %>
+```
+
+## Use
+
 ### Small print
 
 Author: <%= author %> &copy; <%= year %>
