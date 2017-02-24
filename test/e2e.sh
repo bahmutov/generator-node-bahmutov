@@ -3,6 +3,8 @@ set e+x
 echo "Linking current generator package"
 npm link
 
+testFolder=`dirname $0`
+echo "Test folder $testFolder"
 sourceFolder=$PWD
 
 echo "Creating test folder"
@@ -11,7 +13,7 @@ rm -rf $folder
 mkdir $folder
 echo "Created test folder $folder"
 
-cp test/answers.json $folder
+cp $testFolder/answers.json $folder
 echo "Copied answers file answers.json to $folder"
 
 cd $folder
