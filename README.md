@@ -73,7 +73,7 @@ If you use GitLab, you should take a look at
 ## Generating Dockerfile
 
 You can generate a Dockerfile with good defaults for running the current
-Node projects inside a docker container. Based on
+Node project inside a docker container. Based on
 [Docker file in this gist](https://gist.github.com/bahmutov/1003fa86980dda147ff6).
 
     yo node-bahmutov:docker
