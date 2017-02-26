@@ -20,6 +20,7 @@
   "files": [
     "app/*",
     "docker/*",
+    "release/*",
     "!app/*-spec.js"
   ],
   "preferGlobal": true,
