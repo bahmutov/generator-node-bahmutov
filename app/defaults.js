@@ -30,6 +30,9 @@ const defaults = {
         'npm prune',
         'npm run deps',
         'npm test',
+        // linter might have fixed some issues
+        // note - this adds ALL js files!
+        'git add src/*.js',
         'npm run ban'
       ],
       'pre-push': [
