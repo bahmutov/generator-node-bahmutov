@@ -73,7 +73,7 @@ Please set it up before running generator
     git init
     git remote add origin <remote git>
 
-See more details at ${repo}/#remote
+See more details at ${repo}#remote
 `
     const done = this.async()
     originUrl().then((url) => {
@@ -161,7 +161,7 @@ See more details at ${repo}/#remote
     }, {
       type: 'confirm',
       name: 'typescript',
-      message: 'Do you want to use TypeScript?',
+      message: 'Do you want to use TypeScript? (not implemented)',
       default: false,
       store: false
     }]
