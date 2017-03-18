@@ -16,6 +16,8 @@ const is = require('check-more-types')
 const withoutScope = require('./without-scope')
 const remoteGitUtils = require('./https-remote-git-url')
 
+const repo = 'https://github.com/bahmutov/generator-node-bahmutov'
+
 function isEmpty (x) {
   return x
 }
@@ -63,6 +65,16 @@ const g = class extends Generator {
 
   gitOrigin () {
     debug('Getting Git origin url')
+    const gitOriginErrorMessage = `
+🔥  This generator assumes there is already a remote Git
+(probably GitHub or GitLab) repository where all code will live.
+Please set it up before running generator
+
+    git init
+    git remote add origin <remote git>
+
+See more details at ${repo}/#remote
+`
     const done = this.async()
     originUrl().then((url) => {
       la(is.unemptyString(url), 'could not get github origin url')
@@ -73,8 +85,8 @@ const g = class extends Generator {
       debug('git origin HTTPS url', this.originUrl)
       done()
     }).catch((err) => {
-      console.error('Git origin error')
       console.error(err)
+      console.error(gitOriginErrorMessage)
       process.exit(-1)
     })
   }
@@ -145,6 +157,12 @@ const g = class extends Generator {
       type: 'input',
       name: 'keywords',
       message: 'Comma separated keywords',
+      store: false
+    }, {
+      type: 'confirm',
+      name: 'typescript',
+      message: 'Do you want to use TypeScript?',
+      default: false,
       store: false
     }]
     return this.prompt(questions)

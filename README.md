@@ -131,6 +131,15 @@ This module also reads answers to user questions from file `answers.json`
 if found in the current working directory. An example file is
 [test/answers.json](test/answers.json).
 
+## Remote
+
+This generator assumes there is already a remote Git
+(probably GitHub or GitLab) repository where all code will live. Please create
+it first and then set it before running generator
+
+    git init
+    git remote add origin <remote git>
+
 ### Small print
 
 Author: Gleb Bahmutov &copy; 2016
