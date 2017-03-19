@@ -226,12 +226,22 @@ See more details at ${repo}#remote
 
   copySourceFiles () {
     debug('copying source files')
+
+    // entry file
+    const index = this.answers.typescript
+      ? 'src/index.ts'
+      : 'src/index.js'
     this.fs.copy(
       this.templatePath('index.js'),
-      this.destinationPath('src/index.js')
+      this.destinationPath(index)
     )
+
+    // default spec file
     const name = _.kebabCase(this.answers.noScopeName)
-    const specFilename = path.join('src', name + '-spec.js')
+    const specName = this.answers.typescript
+      ? name + '-spec.ts'
+      : name + '-spec.js'
+    const specFilename = path.join('src', specName)
     const info = {
       name: this.answers.name,
       nameVar: _.camelCase(this.answers.noScopeName)
@@ -241,7 +251,7 @@ See more details at ${repo}#remote
       this.destinationPath(specFilename),
       info
     )
-    debug('copied index.js and', specFilename)
+    debug('copied index and spec files')
   }
 
   report () {
