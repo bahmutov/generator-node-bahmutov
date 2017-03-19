@@ -15,8 +15,7 @@ const la = require('lazy-ass')
 const is = require('check-more-types')
 const withoutScope = require('./without-scope')
 const remoteGitUtils = require('./https-remote-git-url')
-
-const repo = 'https://github.com/bahmutov/generator-node-bahmutov'
+const errors = require('./errors')
 
 function isEmpty (x) {
   return x
@@ -65,16 +64,6 @@ const g = Generator.extend({
 
   gitOrigin () {
     debug('Getting Git origin url')
-    const gitOriginErrorMessage = `
-🔥  This generator assumes there is already a remote Git
-(probably GitHub or GitLab) repository where all code will live.
-Please set it up before running generator
-
-    git init
-    git remote add origin <remote git>
-
-See more details at ${repo}#remote
-`
     const done = this.async()
     originUrl().then((url) => {
       la(is.unemptyString(url), 'could not get github origin url')
@@ -84,11 +73,7 @@ See more details at ${repo}#remote
       this.originUrl = remoteGitUtils.gitRemoteToHttps(url)
       debug('git origin HTTPS url', this.originUrl)
       done()
-    }).catch((err) => {
-      console.error(err)
-      console.error(gitOriginErrorMessage)
-      process.exit(-1)
-    })
+    }).catch(errors.onGitOriginError)
   },
 
   author () {
@@ -109,10 +94,13 @@ See more details at ${repo}#remote
 
   _recordAnswers (answers) {
     la(is.unemptyString(answers.name), 'missing name', answers)
-    la(is.maybe.unemptyString(answers.description),
-      'invalid description', answers)
-    la(is.maybe.unemptyString(answers.keywords),
-      'invalid keywords', answers)
+
+    if (is.not.unemptyString(answers.description)) {
+      errors.onMissingDescription()
+    }
+    if (is.not.unemptyString(answers.keywords)) {
+      errors.onMissingKeywords()
+    }
 
     answers.keywords = answers.keywords.split(',').filter(isEmpty)
     this.answers = _.extend(defaults, answers)
