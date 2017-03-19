@@ -22,7 +22,7 @@ git init
 git remote add origin git@github.com:bahmutov/test-node-generator.git
 
 echo "Running yeoman, expect to read answers from file"
-yo node-bahmutov
+DEBUG=gen yo node-bahmutov
 rm answers.json
 echo "Generator is done"
 

@@ -121,6 +121,13 @@ See more details at ${repo}#remote
     la(is.unemptyString(this.answers.noScopeName),
       'could not compute name without scope from', this.answers.name)
     debug('got answers to my questions')
+    debug('answers to main questions')
+    debug('- name', this.answers.name)
+    debug('- description', this.answers.description)
+    debug('- keywords', this.answers.keywords)
+    debug('- typescript', this.answers.typescript)
+    la(is.bool(this.answers.typescript),
+      'expected boolean typescript', this.answers.typescript)
   }
 
   _readAnswersFromFile (filename) {
