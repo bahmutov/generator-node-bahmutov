@@ -231,9 +231,10 @@ See more details at ${repo}#remote
     const index = this.answers.typescript
       ? 'src/index.ts'
       : 'src/index.js'
-    this.fs.copy(
+    this.fs.copyTpl(
       this.templatePath('index.js'),
-      this.destinationPath(index)
+      this.destinationPath(index),
+      {typescript: this.answers.typescript}
     )
 
     // default spec file
@@ -244,7 +245,8 @@ See more details at ${repo}#remote
     const specFilename = path.join('src', specName)
     const info = {
       name: this.answers.name,
-      nameVar: _.camelCase(this.answers.noScopeName)
+      nameVar: _.camelCase(this.answers.noScopeName),
+      typescript: this.answers.typescript
     }
     this.fs.copyTpl(
       this.templatePath('spec.js'),
@@ -278,7 +280,15 @@ See more details at ${repo}#remote
 
   writePackage () {
     debug('writing package.json file')
-    const clean = _.omit(this.answers, ['noScopeName', 'repoDomain'])
+    const clean = _.omit(this.answers,
+      ['noScopeName', 'repoDomain', 'typescript'])
+
+    if (this.answers.typescript) {
+      debug('setting TypeScript build step')
+      clean.scripts.build = 'tsc'
+      clean.scripts.lint = 'tslint --fix --format stylish src/**/*.ts'
+    }
+
     const str = JSON.stringify(clean, null, 2) + '\n'
     fs.writeFileSync(packageFilename, str, 'utf8')
   }
@@ -301,7 +311,8 @@ See more details at ${repo}#remote
       'pre-git'
     ]
     if (this.answers.typescript) {
-      devDependencies.push('tslint', 'tslint-config-standard', 'typescript')
+      devDependencies.push('tslint',
+        'tslint-config-standard', 'typescript', '@types/mocha')
     } else {
       // linting JavaScript
       devDependencies.push('standard')
