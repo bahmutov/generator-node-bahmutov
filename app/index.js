@@ -254,6 +254,23 @@ See more details at ${repo}#remote
     debug('copied index and spec files')
   }
 
+  copyTypeScriptFiles () {
+    if (!this.answers.typescript) {
+      return
+    }
+
+    this.fs.copy(
+      this.templatePath('tsconfig.json'),
+      this.destinationPath('tsconfig.json')
+    )
+
+    this.fs.copy(
+      this.templatePath('tslint.json'),
+      this.destinationPath('tslint.json')
+    )
+    debug('copied TypeScript config files')
+  }
+
   report () {
     debug('all values')
     debug(JSON.stringify(this.answers, null, 2))
@@ -281,9 +298,14 @@ See more details at ${repo}#remote
       'license-checker',
       'mocha',
       'nsp',
-      'pre-git',
-      'standard'
+      'pre-git'
     ]
+    if (this.answers.typescript) {
+      devDependencies.push('tslint', 'tslint-config-standard', 'typescript')
+    } else {
+      // linting JavaScript
+      devDependencies.push('standard')
+    }
     const installOptions = {
       saveDev: true,
       depth: 0
