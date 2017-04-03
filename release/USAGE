@@ -1,0 +1,9 @@
+Description:
+    Sets up semantic release with good plugins.
+
+Example
+    npm install -g semantic-release-cli
+    yo node-bahmutov:release
+
+See https://github.com/bahmutov/generator-node-bahmutov#semantic-release
+for more details

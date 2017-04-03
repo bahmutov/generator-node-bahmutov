@@ -73,7 +73,7 @@ If you use GitLab, you should take a look at
 ## Generating Dockerfile
 
 You can generate a Dockerfile with good defaults for running the current
-Node projects inside a docker container. Based on
+Node project inside a docker container. Based on
 [Docker file in this gist](https://gist.github.com/bahmutov/1003fa86980dda147ff6).
 
     yo node-bahmutov:docker
@@ -130,6 +130,15 @@ Following [the instructions](http://yeoman.io/authoring/index.html).
 This module also reads answers to user questions from file `answers.json`
 if found in the current working directory. An example file is
 [test/answers.json](test/answers.json).
+
+## Remote
+
+This generator assumes there is already a remote Git
+(probably GitHub or GitLab) repository where all code will live. Please create
+it first and then set it before running generator
+
+    git init
+    git remote add origin <remote git>
 
 ### Small print
 

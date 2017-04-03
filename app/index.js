@@ -15,6 +15,7 @@ const la = require('lazy-ass')
 const is = require('check-more-types')
 const withoutScope = require('./without-scope')
 const remoteGitUtils = require('./https-remote-git-url')
+const errors = require('./errors')
 
 function isEmpty (x) {
   return x
@@ -26,14 +27,14 @@ function _printVersion () {
   console.log('using %s@%s', myPackage.name, myPackage.version)
 }
 
-const g = class extends Generator {
+const g = Generator.extend({
   printVersion () {
     _printVersion()
-  }
+  },
 
   setDefaults () {
     this.answers = defaults
-  }
+  },
 
   copyNpmrc () {
     debug('Copying .npmrc file')
@@ -41,7 +42,7 @@ const g = class extends Generator {
       this.templatePath('npmrc'),
       this.destinationPath('.npmrc')
     )
-  }
+  },
 
   copyGitignore () {
     debug('Copying .gitignore file')
@@ -49,7 +50,7 @@ const g = class extends Generator {
       this.templatePath('gitignore'),
       this.destinationPath('.gitignore')
     )
-  }
+  },
 
   git () {
     debug('Looking for .git folder')
@@ -59,7 +60,7 @@ const g = class extends Generator {
       console.error('git remote add origin ...')
       process.exit(-1)
     }
-  }
+  },
 
   gitOrigin () {
     debug('Getting Git origin url')
@@ -72,18 +73,14 @@ const g = class extends Generator {
       this.originUrl = remoteGitUtils.gitRemoteToHttps(url)
       debug('git origin HTTPS url', this.originUrl)
       done()
-    }).catch((err) => {
-      console.error('Git origin error')
-      console.error(err)
-      process.exit(-1)
-    })
-  }
+    }).catch(errors.onGitOriginError)
+  },
 
   author () {
     this.answers = _.extend(this.answers, {
       author: this.user.git.name() + ' <' + this.user.git.email() + '>'
     })
-  }
+  },
 
   githubUsername () {
     // HACK, cannot get github username reliably from email
@@ -93,14 +90,17 @@ const g = class extends Generator {
     debug('got github username', this.githubUsername)
     console.assert(this.githubUsername,
       'Could not get github username from url ' + this.originUrl)
-  }
+  },
 
   _recordAnswers (answers) {
     la(is.unemptyString(answers.name), 'missing name', answers)
-    la(is.maybe.unemptyString(answers.description),
-      'invalid description', answers)
-    la(is.maybe.unemptyString(answers.keywords),
-      'invalid keywords', answers)
+
+    if (is.not.unemptyString(answers.description)) {
+      errors.onMissingDescription()
+    }
+    if (is.not.unemptyString(answers.keywords)) {
+      errors.onMissingKeywords()
+    }
 
     answers.keywords = answers.keywords.split(',').filter(isEmpty)
     this.answers = _.extend(defaults, answers)
@@ -109,7 +109,14 @@ const g = class extends Generator {
     la(is.unemptyString(this.answers.noScopeName),
       'could not compute name without scope from', this.answers.name)
     debug('got answers to my questions')
-  }
+    debug('answers to main questions')
+    debug('- name', this.answers.name)
+    debug('- description', this.answers.description)
+    debug('- keywords', this.answers.keywords)
+    debug('- typescript', this.answers.typescript)
+    la(is.bool(this.answers.typescript),
+      'expected boolean typescript', this.answers.typescript)
+  },
 
   _readAnswersFromFile (filename) {
     la(is.unemptyString(filename), 'missing answers filename', filename)
@@ -117,7 +124,7 @@ const g = class extends Generator {
     la(is.isJson(filename), 'answers file should be JSON', filename)
     const answers = require(filename)
     return Promise.resolve(answers)
-  }
+  },
 
   projectName () {
     debug('getting project name and other details')
@@ -146,10 +153,16 @@ const g = class extends Generator {
       name: 'keywords',
       message: 'Comma separated keywords',
       store: false
+    }, {
+      type: 'confirm',
+      name: 'typescript',
+      message: 'Do you want to use TypeScript? (alpha)',
+      default: false,
+      store: false
     }]
     return this.prompt(questions)
       .then(recordAnswers)
-  }
+  },
 
   repo () {
     debug('getting repo details')
@@ -159,7 +172,7 @@ const g = class extends Generator {
         url: this.originUrl
       }
     })
-  }
+  },
 
   homepage () {
     const domain = this.repoDomain
@@ -169,7 +182,7 @@ const g = class extends Generator {
     la(is.strings([domain, user, name]),
       'missing information to construct homepage url', this.answers.homepage)
     debug('home is', this.answers.homepage)
-  }
+  },
 
   bugs () {
     const domain = this.repoDomain
@@ -179,7 +192,7 @@ const g = class extends Generator {
     la(is.strings([domain, user, name]),
       'missing information to construct bugs url', this.answers.bugs)
     debug('bugs url is', this.answers.bugs)
-  }
+  },
 
   copyReadme () {
     debug('copying readme')
@@ -197,46 +210,92 @@ const g = class extends Generator {
       this.destinationPath('README.md'),
       readmeContext
     )
-  }
+  },
 
   copySourceFiles () {
     debug('copying source files')
-    this.fs.copy(
+
+    // entry file
+    const index = this.answers.typescript
+      ? 'src/index.ts'
+      : 'src/index.js'
+    this.fs.copyTpl(
       this.templatePath('index.js'),
-      this.destinationPath('src/index.js')
+      this.destinationPath(index),
+      {typescript: this.answers.typescript}
     )
+
+    // default spec file
     const name = _.kebabCase(this.answers.noScopeName)
-    const specFilename = path.join('src', name + '-spec.js')
+    const specName = this.answers.typescript
+      ? name + '-spec.ts'
+      : name + '-spec.js'
+    const specFilename = path.join('src', specName)
     const info = {
       name: this.answers.name,
-      nameVar: _.camelCase(this.answers.noScopeName)
+      nameVar: _.camelCase(this.answers.noScopeName),
+      typescript: this.answers.typescript
     }
     this.fs.copyTpl(
       this.templatePath('spec.js'),
       this.destinationPath(specFilename),
       info
     )
-    debug('copied index.js and', specFilename)
-  }
+    debug('copied index and spec files')
+  },
+
+  copyTypeScriptFiles () {
+    if (!this.answers.typescript) {
+      return
+    }
+
+    this.fs.copy(
+      this.templatePath('tsconfig.json'),
+      this.destinationPath('tsconfig.json')
+    )
+
+    this.fs.copy(
+      this.templatePath('tslint.json'),
+      this.destinationPath('tslint.json')
+    )
+    debug('copied TypeScript config files')
+  },
 
   report () {
     debug('all values')
     debug(JSON.stringify(this.answers, null, 2))
-  }
+  },
 
   writePackage () {
     debug('writing package.json file')
-    const clean = _.omit(this.answers, ['noScopeName', 'repoDomain'])
+    const clean = _.omit(this.answers,
+      ['noScopeName', 'repoDomain', 'typescript'])
+
+    if (this.answers.typescript) {
+      debug('setting TypeScript build step')
+      clean.scripts.build = 'tsc'
+      clean.scripts.pretest = 'npm run build'
+      clean.scripts.lint = 'tslint --fix --format stylish src/**/*.ts'
+      clean.scripts.unit = 'mocha build/*-spec.js'
+      clean.files = [
+        'src/*.ts',
+        'build/*.js',
+        '!src/*-spec.ts',
+        '!build/*-spec.js'
+      ]
+      clean.main = 'build/'
+    }
+
     const str = JSON.stringify(clean, null, 2) + '\n'
     fs.writeFileSync(packageFilename, str, 'utf8')
-  }
+  },
 
   fixpack () {
     debug('fixing package.json')
     fixpack(packageFilename)
-  }
+  },
 
-  installDeps () {
+  install () {
     debug('installing dependencies')
     const devDependencies = [
       'ban-sensitive-files',
@@ -246,26 +305,78 @@ const g = class extends Generator {
       'license-checker',
       'mocha',
       'nsp',
-      'pre-git',
-      'standard'
+      'pre-git'
     ]
+    if (this.answers.typescript) {
+      devDependencies.push('tslint',
+        'tslint-config-standard', 'typescript', '@types/mocha')
+    } else {
+      // linting JavaScript
+      devDependencies.push('standard')
+    }
     const installOptions = {
       saveDev: true,
       depth: 0
     }
-    this.npmInstall(devDependencies, installOptions)
-  }
+    return this.npmInstall(devDependencies, installOptions)
+  },
 
-  printSemanticReleaseAdvice () {
-    if (remoteGitUtils.isGithub(this.originUrl)) {
-      console.log('Please consider using semantic release to publish to NPM')
-      console.log('  npm i -g semantic-release-cli')
-      console.log('  semantic-release-cli setup')
-    } else if (remoteGitUtils.isGitlab(this.originUrl)) {
-      console.log('Please consider using semantic release to publish to NPM')
-      console.log('See https://gitlab.com/hyper-expanse/semantic-release-gitlab')
+  end: {
+    lintTypeScript () {
+      if (!this.answers.typescript) {
+        return
+      }
+      debug('linting typescript')
+      const done = this.async()
+      const child = this.spawnCommand('npm', ['run', 'lint'])
+      child.on('close', exitCode => {
+        if (exitCode) {
+          const msg = 'Could not lint TypeScript code'
+          console.error(msg)
+          console.error('exit code', exitCode)
+          return done(new Error(msg))
+        }
+        done()
+      })
+    },
+
+    endAndBuildTypeScript () {
+      if (!this.answers.typescript) {
+        return
+      }
+      debug('building from typescript')
+      const done = this.async()
+      const child = this.spawnCommand('npm', ['run', 'build'])
+      child.on('close', exitCode => {
+        if (exitCode) {
+          const msg = 'Could not build from TypeScript code'
+          console.error(msg)
+          console.error('exit code', exitCode)
+          return done(new Error(msg))
+        }
+        done()
+      })
+    },
+
+    printSemanticReleaseAdvice () {
+      console.log('Solid Node project has been setup for you 🎉🎉🎉')
+
+      if (this.answers.typescript) {
+        console.log('TypeScript source code in src/ folder')
+        console.log('run "npm run build" to build JS code')
+        console.log('generated JavaScript code in build/ folder')
+      }
+
+      if (remoteGitUtils.isGithub(this.originUrl)) {
+        console.log('Please consider using semantic release to publish to NPM')
+        console.log('  npm i -g semantic-release-cli')
+        console.log('  semantic-release-cli setup')
+      } else if (remoteGitUtils.isGitlab(this.originUrl)) {
+        console.log('Please consider using semantic release to publish to NPM')
+        console.log('See https://gitlab.com/hyper-expanse/semantic-release-gitlab')
+      }
     }
   }
-}
+})
 
 module.exports = g

@@ -1,0 +1,19 @@
+Description:
+    Initializes an NPM module with all good defaults and tools
+
+Example
+    Create a new folder, for example "foo" and run "git init"
+    Create a GitHub repo, for example "username/foo"
+    Set remote origin to point at the GitHub repo
+    Run `yo node-bahmutov`
+
+Sit back and enjoy.
+
+Included sub generators
+
+You can run these sub generators after create NPM module.
+
+* `yo node-bahmutov:release` sets up semantic release
+* `yo node-bahmutov:docker` creates solid Dockerfile for single service
+
+See https://github.com/bahmutov/generator-node-bahmutov for more details

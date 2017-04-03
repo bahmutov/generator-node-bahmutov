@@ -1,10 +1,10 @@
 set e+x
 
+echo "Testing generating TypeScript Node package"
+
 echo "Linking current generator package"
 npm link
 
-testFolder=`dirname $0`
-echo "Test folder $testFolder"
 sourceFolder=$PWD
 
 echo "Creating test folder"
@@ -13,7 +13,7 @@ rm -rf $folder
 mkdir $folder
 echo "Created test folder $folder"
 
-cp $testFolder/answers.json $folder
+cp test/answers-typescript.json $folder/answers.json
 echo "Copied answers file answers.json to $folder"
 
 cd $folder
@@ -29,7 +29,7 @@ rm answers.json
 echo "Generator is done"
 
 echo "Making a microservice"
-npm i -S micro@6.1.0 freeport-promise
+npm i -S micro@6.1.0
 cp $sourceFolder/test/index.js src/index.js
 git add src/*.js .gitignore .npmrc README.md package.json
 echo "Files before the commit"
@@ -42,14 +42,4 @@ ls -la
 git log --oneline
 # git show
 
-echo "Testing Dockerfile generation"
-yo node-bahmutov:docker
-echo "Git status"
-git status
-git add Dockerfile .dockerignore package.json
-git commit -m "chore(docker): generate Dockerfile"
-
-echo "Git log after adding docker files"
-git log --oneline
-
-echo "All done testing generator in $folder"
+echo "All done testing TypeScript generator in $folder"

@@ -1,0 +1,8 @@
+Description:
+    You can generate a Dockerfile with good defaults for running
+    the current Node project inside a Docker container
+
+    yo node-bahmutov:docker
+
+See https://github.com/bahmutov/generator-node-bahmutov#generating-dockerfile
+for more details

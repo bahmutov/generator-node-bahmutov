@@ -1,0 +1,6 @@
+{
+  "name": "test-typescript-project",
+  "description": "This is a test project with TypeScript support",
+  "keywords": "test, generator, typescript",
+  "typescript": true
+}

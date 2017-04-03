@@ -13,6 +13,7 @@
     "issues": "git-issues",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
     "e2e": "./test/e2e.sh",
+    "e2e-typescript": "./test/e2e-typescript.sh",
     "ban": "ban",
     "license": "license-checker --production --onlyunknown --csv",
     "deps": "deps-ok && dependency-check ."
@@ -20,6 +21,7 @@
   "files": [
     "app/*",
     "docker/*",
+    "release/*",
     "!app/*-spec.js"
   ],
   "preferGlobal": true,
