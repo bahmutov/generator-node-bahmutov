@@ -11,7 +11,7 @@ const defaults = {
   },
   scripts: {
     ban: 'ban',
-    deps: 'deps-ok && dependency-check .',
+    deps: 'deps-ok && dependency-check --no-dev .',
     issues: 'git-issues',
     license: 'license-checker --production --onlyunknown --csv',
     lint: 'standard --verbose --fix src/*.js',

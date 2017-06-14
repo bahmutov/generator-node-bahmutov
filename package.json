@@ -16,7 +16,7 @@
     "e2e-typescript": "./test/e2e-typescript.sh",
     "ban": "ban",
     "license": "license-checker --production --onlyunknown --csv",
-    "deps": "deps-ok && dependency-check ."
+    "deps": "deps-ok && dependency-check --no-dev ."
   },
   "files": [
     "app/*",
