@@ -2,7 +2,7 @@
   "name": "generator-node-bahmutov",
   "description": "My personal Yeoman generator for Node projects",
   "main": "app/index.js",
-  "version": "0.0.0-semantic-release",
+  "version": "0.0.0-development",
   "scripts": {
     "test": "npm run unit",
     "commit": "commit-wizard",
@@ -79,7 +79,7 @@
     "license-checker": "8.0.3",
     "mocha": "3.2.0",
     "pre-git": "3.12.0",
-    "semantic-release": "6.3.6",
+    "semantic-release": "^6.3.6",
     "standard": "8.6.0"
   },
   "release": {
