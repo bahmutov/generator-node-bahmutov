@@ -22,9 +22,11 @@ function isEmpty (x) {
 }
 
 function _printVersion () {
-  const myPackageFilename = path.join(__dirname, '../package.json')
+  const rootFolder = path.join(__dirname, '..')
+  const myPackageFilename = path.join(rootFolder, 'package.json')
   const myPackage = require(myPackageFilename)
   console.log('using %s@%s', myPackage.name, myPackage.version)
+  console.log('installed in %s', rootFolder)
 }
 
 const g = Generator.extend({

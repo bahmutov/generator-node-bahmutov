@@ -77,7 +77,7 @@ const g = class extends Generator {
   }
 
   end () {
-    console.log('All done')
+    console.log('✅  All done')
     console.log(`You should add dependent projects to test
     before each release to package.json
     release.verifyRelease.test-against list`)
