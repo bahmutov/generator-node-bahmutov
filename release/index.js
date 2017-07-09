@@ -23,10 +23,11 @@ const g = class extends Generator {
   }
 
   initializing () {
-    console.log('Setting up semantic release')
-    console.log('using https://github.com/semantic-release/semantic-release')
-    console.log('https://github.com/bahmutov/simple-commit-message')
-    console.log('and https://github.com/bahmutov/dont-crack')
+    console.log('📝  Setting up semantic release')
+    console.log('using these semantic-release plugins:')
+    console.log('* https://github.com/bahmutov/simple-commit-message')
+    console.log('* https://github.com/bahmutov/github-post-release')
+    console.log('* https://github.com/bahmutov/dont-crack')
   }
 
   setupSemanticRelease () {
@@ -50,6 +51,7 @@ const g = class extends Generator {
     const pkg = require(this.pkgFilename)
     pkg.release = {
       analyzeCommits: 'simple-commit-message',
+      generateNotes: 'github-post-release',
       verifyRelease: {
         path: 'dont-crack',
         'test-against': []
@@ -61,7 +63,12 @@ const g = class extends Generator {
   }
 
   install () {
-    const deps = ['semantic-release', 'simple-commit-message', 'dont-crack']
+    const deps = [
+      'semantic-release',
+      'simple-commit-message',
+      'github-post-release',
+      'dont-crack'
+    ]
     console.log('Installing useful plugin modules', deps)
 
     this.npmInstall(deps, {
