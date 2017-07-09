@@ -1,3 +1,4 @@
+// default package.json object
 const defaults = {
   version: '1.0.0',
   main: 'src/',
@@ -11,6 +12,8 @@ const defaults = {
     deps: 'deps-ok && dependency-check --no-dev .',
     issues: 'git-issues',
     license: 'license-checker --production --onlyunknown --csv',
+    pretty: "prettier-standard 'src/*.js'",
+    prelint: 'npm run pretty',
     lint: 'standard --verbose --fix src/*.js',
     pretest: 'npm run lint',
     secure: 'nsp check',

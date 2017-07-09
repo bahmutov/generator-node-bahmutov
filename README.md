@@ -27,7 +27,7 @@ Answer a few questions and you should be all set.
 * Default `.npmrc` and `.gitignore` files
 * Git hooks and message validation using [pre-git](https://github.com/bahmutov/pre-git)
 * Linting and auto formatting using [standard](http://standardjs.com/) and
-  [standard-format](https://github.com/maxogden/standard-format) using `npm run lint`
+  [prettier-standard](https://github.com/sheerun/prettier-standard#readme) using `npm run lint`
 * Showing open Git issues via
   [git-issues](https://github.com/softwarescales/git-issues) using `npm run issues`
 * Unit testing with [Mocha](http://mochajs.org/) using `npm run unit`
