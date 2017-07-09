@@ -330,7 +330,8 @@ const g = Generator.extend({
       'license-checker',
       'mocha',
       'nsp',
-      'pre-git'
+      'pre-git',
+      'prettier-standard'
     ]
     if (this.answers.typescript) {
       devDependencies.push(
