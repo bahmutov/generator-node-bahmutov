@@ -8,6 +8,8 @@
     "commit": "commit-wizard",
     "pretest": "npm run lint",
     "unit": "mocha app/*-spec.js",
+    "pretty": "prettier-standard 'app/*.js' 'docker/*.js' 'release/*.js' 'test/*.js'",
+    "prelint": "npm run pretty",
     "lint": "standard --verbose --fix app/*.js docker/*.js release/*.js test/*.js",
     "size": "t=\"$(npm pack .)\"; wc -c \"${t}\"; tar tvf \"${t}\"; rm \"${t}\";",
     "issues": "git-issues",
@@ -79,6 +81,7 @@
     "license-checker": "8.0.3",
     "mocha": "3.2.0",
     "pre-git": "3.12.0",
+    "prettier-standard": "6.0.0",
     "semantic-release": "^6.3.6",
     "standard": "8.6.0"
   },

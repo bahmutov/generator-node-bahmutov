@@ -38,10 +38,7 @@ const g = Generator.extend({
 
   copyNpmrc () {
     debug('Copying .npmrc file')
-    this.fs.copy(
-      this.templatePath('npmrc'),
-      this.destinationPath('.npmrc')
-    )
+    this.fs.copy(this.templatePath('npmrc'), this.destinationPath('.npmrc'))
   },
 
   copyGitignore () {
@@ -55,7 +52,9 @@ const g = Generator.extend({
   git () {
     debug('Looking for .git folder')
     if (!exists('.git')) {
-      console.error('Cannot find .git folder, please initialize the Git repo first')
+      console.error(
+        'Cannot find .git folder, please initialize the Git repo first'
+      )
       console.error('git init')
       console.error('git remote add origin ...')
       process.exit(-1)
@@ -65,15 +64,17 @@ const g = Generator.extend({
   gitOrigin () {
     debug('Getting Git origin url')
     const done = this.async()
-    originUrl().then((url) => {
-      la(is.unemptyString(url), 'could not get github origin url')
-      debug('got remote origin url', url)
-      this.repoDomain = remoteGitUtils.getDomain(url)
-      debug('repo domain', this.repoDomain)
-      this.originUrl = remoteGitUtils.gitRemoteToHttps(url)
-      debug('git origin HTTPS url', this.originUrl)
-      done()
-    }).catch(errors.onGitOriginError)
+    originUrl()
+      .then(url => {
+        la(is.unemptyString(url), 'could not get github origin url')
+        debug('got remote origin url', url)
+        this.repoDomain = remoteGitUtils.getDomain(url)
+        debug('repo domain', this.repoDomain)
+        this.originUrl = remoteGitUtils.gitRemoteToHttps(url)
+        debug('git origin HTTPS url', this.originUrl)
+        done()
+      })
+      .catch(errors.onGitOriginError)
   },
 
   author () {
@@ -88,8 +89,10 @@ const g = Generator.extend({
     // parse github url instead
     this.githubUsername = usernameFromGithubUrl(this.originUrl)
     debug('got github username', this.githubUsername)
-    console.assert(this.githubUsername,
-      'Could not get github username from url ' + this.originUrl)
+    console.assert(
+      this.githubUsername,
+      'Could not get github username from url ' + this.originUrl
+    )
   },
 
   _recordAnswers (answers) {
@@ -104,18 +107,28 @@ const g = Generator.extend({
 
     answers.keywords = answers.keywords.split(',').filter(isEmpty)
     this.answers = _.extend(defaults, answers)
-    la(is.unemptyString(this.answers.name), 'missing full name', this.answers.name)
+    la(
+      is.unemptyString(this.answers.name),
+      'missing full name',
+      this.answers.name
+    )
     this.answers.noScopeName = withoutScope(this.answers.name)
-    la(is.unemptyString(this.answers.noScopeName),
-      'could not compute name without scope from', this.answers.name)
+    la(
+      is.unemptyString(this.answers.noScopeName),
+      'could not compute name without scope from',
+      this.answers.name
+    )
     debug('got answers to my questions')
     debug('answers to main questions')
     debug('- name', this.answers.name)
     debug('- description', this.answers.description)
     debug('- keywords', this.answers.keywords)
     debug('- typescript', this.answers.typescript)
-    la(is.bool(this.answers.typescript),
-      'expected boolean typescript', this.answers.typescript)
+    la(
+      is.bool(this.answers.typescript),
+      'expected boolean typescript',
+      this.answers.typescript
+    )
   },
 
   _readAnswersFromFile (filename) {
@@ -133,35 +146,38 @@ const g = Generator.extend({
     const answersFilename = path.join(process.cwd(), 'answers.json')
     if (exists(answersFilename)) {
       debug('reading answers from file', answersFilename)
-      return this._readAnswersFromFile(answersFilename)
-        .then(recordAnswers)
+      return this._readAnswersFromFile(answersFilename).then(recordAnswers)
     }
 
-    const questions = [{
-      type: 'input',
-      name: 'name',
-      message: 'Your project name',
-      default: _.kebabCase(this.appname),
-      store: false
-    }, {
-      type: 'input',
-      name: 'description',
-      message: 'Project description',
-      store: false
-    }, {
-      type: 'input',
-      name: 'keywords',
-      message: 'Comma separated keywords',
-      store: false
-    }, {
-      type: 'confirm',
-      name: 'typescript',
-      message: 'Do you want to use TypeScript? (alpha)',
-      default: false,
-      store: false
-    }]
-    return this.prompt(questions)
-      .then(recordAnswers)
+    const questions = [
+      {
+        type: 'input',
+        name: 'name',
+        message: 'Your project name',
+        default: _.kebabCase(this.appname),
+        store: false
+      },
+      {
+        type: 'input',
+        name: 'description',
+        message: 'Project description',
+        store: false
+      },
+      {
+        type: 'input',
+        name: 'keywords',
+        message: 'Comma separated keywords',
+        store: false
+      },
+      {
+        type: 'confirm',
+        name: 'typescript',
+        message: 'Do you want to use TypeScript? (alpha)',
+        default: false,
+        store: false
+      }
+    ]
+    return this.prompt(questions).then(recordAnswers)
   },
 
   repo () {
@@ -179,8 +195,11 @@ const g = Generator.extend({
     const user = this.githubUsername
     const name = this.answers.noScopeName
     this.answers.homepage = `https://${domain}/${user}/${name}#readme`
-    la(is.strings([domain, user, name]),
-      'missing information to construct homepage url', this.answers.homepage)
+    la(
+      is.strings([domain, user, name]),
+      'missing information to construct homepage url',
+      this.answers.homepage
+    )
     debug('home is', this.answers.homepage)
   },
 
@@ -189,8 +208,11 @@ const g = Generator.extend({
     const user = this.githubUsername
     const name = this.answers.noScopeName
     this.answers.bugs = `https://${domain}/${user}/${name}/issues`
-    la(is.strings([domain, user, name]),
-      'missing information to construct bugs url', this.answers.bugs)
+    la(
+      is.strings([domain, user, name]),
+      'missing information to construct bugs url',
+      this.answers.bugs
+    )
     debug('bugs url is', this.answers.bugs)
   },
 
@@ -201,7 +223,7 @@ const g = Generator.extend({
       repoName: this.answers.noScopeName,
       description: this.answers.description,
       author: this.answers.author,
-      year: (new Date()).getFullYear(),
+      year: new Date().getFullYear(),
       username: this.githubUsername
     }
     debug('Copying readme template with values', readmeContext)
@@ -216,13 +238,11 @@ const g = Generator.extend({
     debug('copying source files')
 
     // entry file
-    const index = this.answers.typescript
-      ? 'src/index.ts'
-      : 'src/index.js'
+    const index = this.answers.typescript ? 'src/index.ts' : 'src/index.js'
     this.fs.copyTpl(
       this.templatePath('index.js'),
       this.destinationPath(index),
-      {typescript: this.answers.typescript}
+      { typescript: this.answers.typescript }
     )
 
     // default spec file
@@ -268,8 +288,11 @@ const g = Generator.extend({
 
   writePackage () {
     debug('writing package.json file')
-    const clean = _.omit(this.answers,
-      ['noScopeName', 'repoDomain', 'typescript'])
+    const clean = _.omit(this.answers, [
+      'noScopeName',
+      'repoDomain',
+      'typescript'
+    ])
 
     if (this.answers.typescript) {
       debug('setting TypeScript build step')
@@ -308,8 +331,12 @@ const g = Generator.extend({
       'pre-git'
     ]
     if (this.answers.typescript) {
-      devDependencies.push('tslint',
-        'tslint-config-standard', 'typescript', '@types/mocha')
+      devDependencies.push(
+        'tslint',
+        'tslint-config-standard',
+        'typescript',
+        '@types/mocha'
+      )
     } else {
       // linting JavaScript
       devDependencies.push('standard')
@@ -373,7 +400,9 @@ const g = Generator.extend({
         console.log('  semantic-release-cli setup')
       } else if (remoteGitUtils.isGitlab(this.originUrl)) {
         console.log('Please consider using semantic release to publish to NPM')
-        console.log('See https://gitlab.com/hyper-expanse/semantic-release-gitlab')
+        console.log(
+          'See https://gitlab.com/hyper-expanse/semantic-release-gitlab'
+        )
       }
     }
   }

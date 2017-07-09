@@ -36,4 +36,4 @@ Good keywords make finding your module so much easier.
   lastMessage(msg)
 }
 
-module.exports = {onGitOriginError, onMissingDescription, onMissingKeywords}
+module.exports = { onGitOriginError, onMissingDescription, onMissingKeywords }

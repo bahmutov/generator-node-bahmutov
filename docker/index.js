@@ -25,7 +25,7 @@ const g = class extends Generator {
     super(args, opts)
 
     this.pkgFilename = join(process.cwd(), 'package.json')
-    const defaultOptions = {name: 'app'}
+    const defaultOptions = { name: 'app' }
     const pkg = exists(this.pkgFilename)
       ? require(this.pkgFilename)
       : defaultOptions
@@ -75,12 +75,18 @@ const g = class extends Generator {
 
     let changes = 0
     changes += add('docker-build', `docker build -t ${this.name} .`)
-    changes += add('docker-run',
-      `docker run --name ${this.name} -p 5000:1337 -d ${this.name}`)
-    changes += add('docker-stop',
-      `docker stop ${this.name} && docker rm ${this.name} || true`)
-    changes += add('docker-full-restart',
-      'npm run docker-stop && npm run docker-build && npm run docker-run')
+    changes += add(
+      'docker-run',
+      `docker run --name ${this.name} -p 5000:1337 -d ${this.name}`
+    )
+    changes += add(
+      'docker-stop',
+      `docker stop ${this.name} && docker rm ${this.name} || true`
+    )
+    changes += add(
+      'docker-full-restart',
+      'npm run docker-stop && npm run docker-build && npm run docker-run'
+    )
 
     if (changes) {
       const text = JSON.stringify(pkg, null, 2) + '\n'

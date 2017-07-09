@@ -2,10 +2,7 @@ const defaults = {
   version: '1.0.0',
   main: 'src/',
   license: 'MIT',
-  files: [
-    'src/*.js',
-    '!src/*-spec.js'
-  ],
+  files: ['src/*.js', '!src/*-spec.js'],
   engines: {
     node: '>=6'
   },
@@ -45,7 +42,7 @@ const defaults = {
       'post-merge': []
     }
   },
-  'publishConfig': {
+  publishConfig: {
     registry: 'http://registry.npmjs.org/'
   },
   homepage: '',

@@ -3,7 +3,7 @@ const is = require('check-more-types')
 
 /* global describe, it */
 describe('https git remote url', () => {
-  const {getDomain, gitRemoteToHttps} = require('./https-remote-git-url')
+  const { getDomain, gitRemoteToHttps } = require('./https-remote-git-url')
 
   it('is a function', () => {
     la(is.fn(gitRemoteToHttps))
