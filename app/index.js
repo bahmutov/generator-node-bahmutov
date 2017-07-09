@@ -397,7 +397,8 @@ const g = Generator.extend({
       if (remoteGitUtils.isGithub(this.originUrl)) {
         console.log('Please consider using semantic release to publish to NPM')
         console.log('  npm i -g semantic-release-cli')
-        console.log('  semantic-release-cli setup')
+        console.log('and then run this generator again')
+        console.log('  yo node-bahmutov:release')
       } else if (remoteGitUtils.isGitlab(this.originUrl)) {
         console.log('Please consider using semantic release to publish to NPM')
         console.log(
