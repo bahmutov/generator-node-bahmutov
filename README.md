@@ -42,12 +42,32 @@ Answer a few questions and you should be all set.
   [deps-ok](https://github.com/bahmutov/deps-ok) and
   [dependency-check](https://www.npmjs.com/package/dependency-check)
   using `npm run deps`
-* Docker file generation ([optional](#generating-dockerfile))
-* Semantic release setup ([optional](#semantic-release))
+* Docker file generation with `yo node-bahmutov:docker` ([optional](#generating-dockerfile))
+* Semantic release setup with `yo node-bahmutov:release` ([optional](#semantic-release))
 
 See `npm run` output for the full list of scripts.
 
 [size]: https://glebbahmutov.com/blog/smaller-published-NPM-modules/
+
+## Alias
+
+It is hard to remember `yo node-bahmutov` command, so I suggest using an
+alias to start a good NPM module. Run this command or place it in your
+`~/.alias` file
+
+```
+# create new NPM module using Yeoman generator-node-bahmutov
+alias new_module='yo node-bahmutov && yo node-bahmutov:release'
+```
+
+Make a folder, init new Git repo, set remote GitHub origin url and then call
+the alias
+
+```shell
+$ new_module
+```
+
+Answer 3 questions and you will be all set!
 
 ## Recommended
 
