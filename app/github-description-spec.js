@@ -2,7 +2,7 @@ const la = require('lazy-ass')
 const is = require('check-more-types')
 const snapshot = require('snap-shot')
 
-/* global describe, it, beforeEach, afterEach */
+/* global describe, it, beforeEach */
 describe('github repo description', () => {
   const repoDescription = require('./github-description')
 
@@ -27,31 +27,21 @@ describe('github repo description', () => {
     })
   })
 
-  // TODO finish mocking? or find good HTTP interceptor mocking lib
-  describe.skip('https mock', () => {
-    const sinon = require('sinon')
-    const https = require('https')
+  describe('https mock', () => {
+    const nock = require('nock')
+    const description = 'cool project, bro'
 
     beforeEach(() => {
-      sinon
-        .stub(https, 'request')
-        .callsArgWith(1, {
-          statusCode: 200,
-          headers: {}
-        })
-        .returns({
-          once: () => {},
-          end: () => {}
-        })
-    })
-
-    afterEach(() => {
-      https.request.restore()
+      nock('https://api.github.com')
+        .get('/repos/no-such-user/does-not-exist')
+        .reply(200, { description })
     })
 
     it('can mock non-existent repo', () => {
       const url = 'git@github.com:no-such-user/does-not-exist.git'
-      return repoDescription(url).then(console.log)
+      return repoDescription(url).then(text => {
+        la(description === text, 'wrong description returned', text)
+      })
     })
   })
 })

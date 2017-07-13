@@ -82,6 +82,7 @@
     "license-checker": "12.1.0",
     "mocha": "3.4.2",
     "next-update-travis": "1.4.0",
+    "nock": "9.0.13",
     "pre-git": "3.15.0",
     "prettier-standard": "6.0.0",
     "semantic-release": "^6.3.6",
