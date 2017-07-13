@@ -7,7 +7,7 @@
     "test": "npm run unit",
     "commit": "commit-wizard",
     "pretest": "npm run lint",
-    "unit": "mocha app/*-spec.js",
+    "unit": "mocha --timeout 5000 app/*-spec.js",
     "pretty": "prettier-standard 'app/*.js' 'docker/*.js' 'release/*.js' 'test/*.js'",
     "prelint": "npm run pretty",
     "lint": "standard --verbose --fix app/*.js docker/*.js release/*.js test/*.js",

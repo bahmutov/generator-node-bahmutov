@@ -4,6 +4,13 @@ const parse = require('parse-github-repo-url')
 const got = require('got')
 const debug = require('debug')('gen')
 
+function tap (fn) {
+  return function (x) {
+    fn(x)
+    return x
+  }
+}
+
 function isGitHub (url) {
   return url.indexOf('github.com') !== -1
 }
@@ -25,9 +32,16 @@ function repoDescription (url) {
   const [owner, repo] = parsed
 
   const apiUrl = `https://api.github.com/repos/${owner}/${repo}`
+  debug('fetching description using', apiUrl)
+
   return got(apiUrl, { json: true })
     .then(response => response.body)
     .then(info => info.description)
+    .then(
+      tap(description => {
+        debug('repo description "%s"', description)
+      })
+    )
     .catch(err => {
       debug('could not fetch repo description using', apiUrl)
       debug(err)

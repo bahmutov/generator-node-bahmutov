@@ -10,6 +10,7 @@ const path = require('path')
 const fixpack = require('fixpack')
 const packageFilename = 'package.json'
 const usernameFromGithubUrl = require('./github-username')
+const getRepoDescripton = require('./github-description')
 const defaults = require('./defaults')
 const la = require('lazy-ass')
 const is = require('check-more-types')
@@ -141,7 +142,13 @@ const g = Generator.extend({
     return Promise.resolve(answers)
   },
 
-  projectName () {
+  _fillDefaultAnswers () {
+    return getRepoDescripton(this.originUrl).then(description => ({
+      description
+    }))
+  },
+
+  projectInformation () {
     debug('getting project name and other details')
     const recordAnswers = this._recordAnswers.bind(this)
 
@@ -151,35 +158,38 @@ const g = Generator.extend({
       return this._readAnswersFromFile(answersFilename).then(recordAnswers)
     }
 
-    const questions = [
-      {
-        type: 'input',
-        name: 'name',
-        message: 'Your project name',
-        default: _.kebabCase(this.appname),
-        store: false
-      },
-      {
-        type: 'input',
-        name: 'description',
-        message: 'Project description',
-        store: false
-      },
-      {
-        type: 'input',
-        name: 'keywords',
-        message: 'Comma separated keywords',
-        store: false
-      },
-      {
-        type: 'confirm',
-        name: 'typescript',
-        message: 'Do you want to use TypeScript? (alpha)',
-        default: false,
-        store: false
-      }
-    ]
-    return this.prompt(questions).then(recordAnswers)
+    return this._fillDefaultAnswers().then(answers => {
+      const questions = [
+        {
+          type: 'input',
+          name: 'name',
+          message: 'Your project name',
+          default: _.kebabCase(this.appname),
+          store: false
+        },
+        {
+          type: 'input',
+          name: 'description',
+          message: 'Project description',
+          default: answers.description || '',
+          store: false
+        },
+        {
+          type: 'input',
+          name: 'keywords',
+          message: 'Comma separated keywords',
+          store: false
+        },
+        {
+          type: 'confirm',
+          name: 'typescript',
+          message: 'Do you want to use TypeScript? (alpha)',
+          default: false,
+          store: false
+        }
+      ]
+      return this.prompt(questions).then(recordAnswers)
+    })
   },
 
   repo () {
