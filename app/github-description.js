@@ -25,7 +25,7 @@ function repoDescription (url) {
   const [owner, repo] = parsed
 
   const apiUrl = `https://api.github.com/repos/${owner}/${repo}`
-  return got(apiUrl, {json: true})
+  return got(apiUrl, { json: true })
     .then(response => response.body)
     .then(info => info.description)
     .catch(err => {

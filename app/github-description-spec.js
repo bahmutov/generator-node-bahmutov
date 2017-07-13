@@ -2,8 +2,8 @@ const la = require('lazy-ass')
 const is = require('check-more-types')
 const snapshot = require('snap-shot')
 
-/* global describe, it */
-describe.only('github repo description', () => {
+/* global describe, it, beforeEach, afterEach */
+describe('github repo description', () => {
   const repoDescription = require('./github-description')
 
   it('is a function', () => {
@@ -28,18 +28,21 @@ describe.only('github repo description', () => {
   })
 
   // TODO finish mocking? or find good HTTP interceptor mocking lib
-  describe.skip('https mock', () =>{
+  describe.skip('https mock', () => {
     const sinon = require('sinon')
     const https = require('https')
 
     beforeEach(() => {
-      sinon.stub(https, 'request').callsArgWith(1, {
-        statusCode: 200,
-        headers: {}
-      }).returns({
-        once: () => {},
-        end: () => {}
-      })
+      sinon
+        .stub(https, 'request')
+        .callsArgWith(1, {
+          statusCode: 200,
+          headers: {}
+        })
+        .returns({
+          once: () => {},
+          end: () => {}
+        })
     })
 
     afterEach(() => {
