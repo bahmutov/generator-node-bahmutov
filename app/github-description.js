@@ -30,6 +30,7 @@ function repoDescription (url) {
   const parsed = parse(url)
   la(is.array(parsed), 'could not parse github url', url)
   const [owner, repo] = parsed
+  debug('owner %s repo %s', owner, repo)
 
   const apiUrl = `https://api.github.com/repos/${owner}/${repo}`
   debug('fetching description using', apiUrl)

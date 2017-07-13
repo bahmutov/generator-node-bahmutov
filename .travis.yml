@@ -15,7 +15,7 @@ before_script:
   - npm prune
 script:
   - ./next-update-travis.sh
-  - npm test
+  - DEBUG=gen npm test
   - npm run e2e
   - npm run e2e-typescript
 after_success:
