@@ -80,6 +80,7 @@
     "github-post-release": "1.7.1",
     "license-checker": "8.0.3",
     "mocha": "3.2.0",
+    "next-update-travis": "1.4.0",
     "pre-git": "3.12.0",
     "prettier-standard": "6.0.0",
     "semantic-release": "^6.3.6",
