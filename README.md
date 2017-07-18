@@ -7,6 +7,7 @@
 [![Build status][generator-node-bahmutov-ci-image] ][generator-node-bahmutov-ci-url]
 [![semantic-release][semantic-image] ][semantic-url]
 ![no sudden unpublish](https://img.shields.io/badge/no%20sudden-unpublish%20%E2%9A%93-ff69b4.svg)
+[![next-update-travis badge][nut-badge]][nut-readme]
 
 ## Install and use
 
@@ -206,3 +207,5 @@ OTHER DEALINGS IN THE SOFTWARE.
 [generator-node-bahmutov-ci-url]: https://travis-ci.org/bahmutov/generator-node-bahmutov
 [semantic-image]: https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg
 [semantic-url]: https://github.com/semantic-release/semantic-release
+[nut-badge]: https://img.shields.io/badge/next--update--travis-%E2%9C%94%EF%B8%8F-green.svg
+[nut-readme]: https://github.com/bahmutov/next-update-travis#readme
