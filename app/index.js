@@ -52,6 +52,14 @@ const g = Generator.extend({
     )
   },
 
+  copyIssueTemplate () {
+    debug('Copying issue template')
+    this.fs.copy(
+      this.templatePath('issue_template.md'),
+      this.destinationPath('issue_template.md')
+    )
+  },
+
   git () {
     debug('Looking for .git folder')
     if (!exists('.git')) {
