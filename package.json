@@ -20,8 +20,10 @@
     "license": "license-checker --production --onlyunknown --csv",
     "deps": "deps-ok && dependency-check --no-dev .",
     "pretest": "npm run transpile",
-    "transpile": "babel app-source --out-dir app --ignore templates/* --copy-files",
-    "prepublish": "npm run transpile"
+    "transpile-app": "babel app-source --out-dir app --ignore templates/* --copy-files",
+    "transpile-docker": "babel docker-source --out-dir docker --ignore templates/* --copy-files",
+    "transpile-release": "babel release-source --out-dir release --copy-files",
+    "transpile": "npm run transpile-app && npm run transpile-docker && npm run transpile-release"
   },
   "files": [
     "app/*",
