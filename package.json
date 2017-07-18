@@ -10,7 +10,7 @@
     "unit": "mocha --timeout 5000 app/*-spec.js",
     "pretty": "prettier-standard 'app/*.js' 'docker/*.js' 'release/*.js' 'test/*.js'",
     "prelint": "npm run pretty",
-    "lint": "standard --verbose --fix app/*.js docker/*.js release/*.js test/*.js",
+    "lint": "standard --verbose --fix app-source/*.js docker/*.js release/*.js test/*.js",
     "size": "t=\"$(npm pack .)\"; wc -c \"${t}\"; tar tvf \"${t}\"; rm \"${t}\";",
     "issues": "git-issues",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post",
@@ -18,7 +18,12 @@
     "e2e-typescript": "./test/e2e-typescript.sh",
     "ban": "ban",
     "license": "license-checker --production --onlyunknown --csv",
-    "deps": "deps-ok && dependency-check --no-dev ."
+    "deps": "deps-ok && dependency-check --no-dev .",
+    "pretest": "npm run transpile",
+    "transpile-app": "babel app-source --out-dir app --ignore templates/* --copy-files && cp -r app-source/templates app",
+    "transpile-docker": "babel docker-source --out-dir docker --ignore templates/* --copy-files && cp -r docker-source/templates docker",
+    "transpile-release": "babel release-source --out-dir release --copy-files",
+    "transpile": "npm run transpile-app && npm run transpile-docker && npm run transpile-release"
   },
   "files": [
     "app/*",
@@ -74,6 +79,8 @@
     }
   },
   "devDependencies": {
+    "babel-cli": "6.24.1",
+    "babel-preset-env": "1.6.0",
     "ban-sensitive-files": "1.9.0",
     "dependency-check": "2.9.1",
     "deps-ok": "1.2.0",
