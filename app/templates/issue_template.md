@@ -1,10 +1,6 @@
-Thank you for taking time to open a new issue. Please
-answer a few questions to help us fix it faster.
+Thank you for taking time to open a new issue. Please answer a few questions to help us fix it faster. You can delete text that is irrelevant to the issue.
 
 ## Is this a bug report or a feature request?
-
-- [ ] bug report
-- [ ] feature request
 
 If this is a bug report, please provide as much info as possible
 
