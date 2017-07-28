@@ -1,7 +1,7 @@
 'use strict'
 
 <% if (!typescript) { %>
-/* global describe, it */
+/* eslint-env mocha */
 const <%= nameVar %> = require('.')
 <% } else { %>
 import <%= nameVar %> from '.'
