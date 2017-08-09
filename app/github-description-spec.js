@@ -12,7 +12,8 @@ describe('github repo description', () => {
   })
 
   it('returns description', () => {
-    const description = 'Test project for testing https://github.com/bahmutov/generator-node-bahmutov'
+    const description =
+      'Test project for testing https://github.com/bahmutov/generator-node-bahmutov'
 
     nock('https://api.github.com')
       .get('/repos/bahmutov/test-node-generator')
@@ -23,7 +24,8 @@ describe('github repo description', () => {
   })
 
   it('returns description from HTTPS url', () => {
-    const description = 'Test project for testing https://github.com/bahmutov/generator-node-bahmutov'
+    const description =
+      'Test project for testing https://github.com/bahmutov/generator-node-bahmutov'
 
     nock('https://api.github.com')
       .get('/repos/bahmutov/test-node-generator')

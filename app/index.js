@@ -135,11 +135,38 @@ const g = Generator.extend({
     debug('- description', this.answers.description)
     debug('- keywords', this.answers.keywords)
     debug('- typescript', this.answers.typescript)
+    debug('- immutable', this.answers.immutable)
+
     la(
       is.bool(this.answers.typescript),
       'expected boolean typescript',
       this.answers.typescript
     )
+    la(
+      is.bool(this.answers.immutable),
+      'expected boolean immutable',
+      this.answers.immutable
+    )
+    if (this.answers.typescript) {
+      console.log('⚠️ Cannot lint TypeScript with immutable yet')
+      this.answers.immutable = false
+    }
+
+    if (this.answers.immutable) {
+      this.answers.scripts.postlint = 'eslint --fix src/*.js'
+      this.answers.eslintConfig = {
+        env: {
+          es6: true
+        },
+        plugins: ['immutable'],
+        rules: {
+          'no-var': 2,
+          'immutable/no-let': 2,
+          'immutable/no-this': 2,
+          'immutable/no-mutation': 2
+        }
+      }
+    }
   },
 
   _readAnswersFromFile (filename) {
@@ -192,6 +219,13 @@ const g = Generator.extend({
           type: 'confirm',
           name: 'typescript',
           message: 'Do you want to use TypeScript? (alpha)',
+          default: false,
+          store: false
+        },
+        {
+          type: 'confirm',
+          name: 'immutable',
+          message: 'Do you want to prevent data mutations? (alpha)',
           default: false,
           store: false
         }
@@ -262,7 +296,7 @@ const g = Generator.extend({
     this.fs.copyTpl(
       this.templatePath('index.js'),
       this.destinationPath(index),
-      { typescript: this.answers.typescript }
+      _.pick(this.answers, ['typescript', 'immutable'])
     )
 
     // default spec file
@@ -286,6 +320,7 @@ const g = Generator.extend({
 
   copyTypeScriptFiles () {
     if (!this.answers.typescript) {
+      debug('skipping TypeScript files')
       return
     }
 
@@ -311,7 +346,8 @@ const g = Generator.extend({
     const clean = _.omit(this.answers, [
       'noScopeName',
       'repoDomain',
-      'typescript'
+      'typescript',
+      'immutable'
     ])
 
     if (this.answers.typescript) {
@@ -351,6 +387,9 @@ const g = Generator.extend({
       'pre-git',
       'prettier-standard'
     ]
+    if (this.answers.immutable) {
+      devDependencies.push('eslint', 'eslint-plugin-immutable')
+    }
     if (this.answers.typescript) {
       devDependencies.push(
         'tslint',
