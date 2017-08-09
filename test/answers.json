@@ -2,5 +2,6 @@
   "name": "test-project",
   "description": "This is a test project",
   "keywords": "foo,test,generator",
-  "typescript": false
+  "typescript": false,
+  "immutable": false
 }
