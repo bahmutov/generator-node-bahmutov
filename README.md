@@ -29,6 +29,9 @@ Answer a few questions and you should be all set.
 * Git hooks and message validation using [pre-git](https://github.com/bahmutov/pre-git)
 * Linting and auto formatting using [standard](http://standardjs.com/) and
   [prettier-standard](https://github.com/sheerun/prettier-standard#readme) using `npm run lint`
+* Linting against data mutations using
+  [eslint-plugin-immutable](https://github.com/jhusain/eslint-plugin-immutable#readme)
+  (optional)
 * Showing open Git issues via
   [git-issues](https://github.com/softwarescales/git-issues) using `npm run issues`
 * Unit testing with [Mocha](http://mochajs.org/) using `npm run unit`
