@@ -76,9 +76,9 @@
   "devDependencies": {
     "ban-sensitive-files": "1.9.0",
     "dependency-check": "2.9.1",
-    "deps-ok": "1.2.0",
+    "deps-ok": "1.2.1",
     "git-issues": "1.3.1",
-    "github-post-release": "1.13.0",
+    "github-post-release": "1.13.1",
     "license-checker": "13.0.3",
     "mocha": "3.5.0",
     "next-update-travis": "1.7.1",
