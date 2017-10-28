@@ -18,7 +18,8 @@
     "e2e-typescript": "./test/e2e-typescript.sh",
     "ban": "ban",
     "license": "license-checker --production --onlyunknown --csv",
-    "deps": "deps-ok && dependency-check --no-dev ."
+    "deps": "deps-ok && dependency-check --no-dev .",
+    "unused-deps": "dependency-check --unused --no-dev ."
   },
   "files": [
     "app/*",
@@ -52,7 +53,6 @@
     "lazy-ass": "1.6.0",
     "lodash": "4.17.4",
     "parse-github-repo-url": "1.4.1",
-    "sort-object-keys": "1.1.2",
     "yeoman-generator": "1.1.1"
   },
   "config": {
@@ -64,6 +64,7 @@
         "npm run ban"
       ],
       "pre-push": [
+        "npm run unused-deps",
         "npm run e2e",
         "npm run license",
         "npm run ban -- --all",
