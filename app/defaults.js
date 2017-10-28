@@ -7,6 +7,8 @@ const defaults = {
   engines: {
     node: '>=6'
   },
+  // we assume this package is expected to be published
+  private: false,
   scripts: {
     ban: 'ban',
     deps: 'deps-ok && dependency-check --no-dev .',
