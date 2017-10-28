@@ -42,10 +42,10 @@ Answer a few questions and you should be all set.
   using `npm run ban`
 * License check of production dependencies with
   [license-checker](https://www.npmjs.com/package/license-checker) using `npm run license`
-* Outdated and missing local dependencies check with
+* Outdated, missing local and unused dependencies check with
   [deps-ok](https://github.com/bahmutov/deps-ok) and
   [dependency-check](https://www.npmjs.com/package/dependency-check)
-  using `npm run deps`
+  using `npm run deps` and `npm run unused-deps`
 * Docker file generation with `yo node-bahmutov:docker` ([optional](#generating-dockerfile))
 * Semantic release setup with `yo node-bahmutov:release` ([optional](#semantic-release))
 

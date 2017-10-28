@@ -10,6 +10,7 @@ const defaults = {
   scripts: {
     ban: 'ban',
     deps: 'deps-ok && dependency-check --no-dev .',
+    'unused-deps': 'dependency-check --unused --no-dev .',
     issues: 'git-issues',
     license: 'license-checker --production --onlyunknown --csv',
     pretty: "prettier-standard 'src/*.js'",
@@ -36,6 +37,7 @@ const defaults = {
         'npm run ban'
       ],
       'pre-push': [
+        'npm run unused-deps',
         'npm run secure',
         'npm run license',
         'npm run ban -- --all',
