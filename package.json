@@ -87,7 +87,7 @@
     "pre-git": "3.17.0",
     "prettier-standard": "7.0.3",
     "semantic-release": "8.2.3",
-    "sinon": "4.2.1",
+    "sinon": "4.2.2",
     "snap-shot": "2.17.0",
     "standard": "10.0.3"
   },
