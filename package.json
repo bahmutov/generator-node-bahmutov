@@ -83,11 +83,11 @@
     "license-checker": "15.0.0",
     "mocha": "4.1.0",
     "next-update-travis": "1.7.1",
-    "nock": "9.1.9",
+    "nock": "9.2.3",
     "pre-git": "3.17.0",
     "prettier-standard": "7.0.3",
     "semantic-release": "8.2.3",
-    "sinon": "4.3.0",
+    "sinon": "4.4.2",
     "snap-shot": "2.17.0",
     "standard": "10.0.3"
   },
