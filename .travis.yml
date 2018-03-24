@@ -14,7 +14,6 @@ before_install:
 before_script:
   - npm prune
 script:
-  - ./next-update-travis.sh
   - npm run deps
   - npm run unused-deps
   - DEBUG=gen npm test
