@@ -48,6 +48,7 @@ Answer a few questions and you should be all set.
   using `npm run deps` and `npm run unused-deps`
 * Docker file generation with `yo node-bahmutov:docker` ([optional](#generating-dockerfile))
 * Semantic release setup with `yo node-bahmutov:release` ([optional](#semantic-release))
+* Config for automated dependency updates using [RenovateApp](https://renovateapp.com/) and README badge.
 
 See `npm run` output for the full list of scripts.
 

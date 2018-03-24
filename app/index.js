@@ -17,6 +17,8 @@ const is = require('check-more-types')
 const withoutScope = require('./without-scope')
 const remoteGitUtils = require('./https-remote-git-url')
 const errors = require('./errors')
+const getBadges = require('./badges').getBadges
+const getBadgesUrls = require('./badges').getBadgesUrls
 
 function isEmpty (x) {
   return x
@@ -136,6 +138,7 @@ const g = Generator.extend({
     debug('- keywords', this.answers.keywords)
     debug('- typescript', this.answers.typescript)
     debug('- immutable', this.answers.immutable)
+    debug('- renovateApp', this.answers.renovateApp)
 
     la(
       is.bool(this.answers.typescript),
@@ -228,6 +231,13 @@ const g = Generator.extend({
           message: 'Do you want to prevent data mutations? (alpha)',
           default: false,
           store: false
+        },
+        {
+          type: 'confirm',
+          name: 'renovateApp',
+          message: 'Do you want to use RenovateApp?',
+          default: true,
+          store: false
         }
       ]
       return this.prompt(questions).then(recordAnswers)
@@ -270,17 +280,50 @@ const g = Generator.extend({
     debug('bugs url is', this.answers.bugs)
   },
 
+  copyRenovateConfig () {
+    if (!this.answers.renovateApp) {
+      debug('no need to set up renovate')
+      return
+    }
+    debug('copying renovate config')
+    this.fs.copyTpl(
+      this.templatePath('renovate.json'),
+      this.destinationPath('renovate.json')
+    )
+  },
+
   copyReadme () {
     debug('copying readme')
+    // need bunch of badges
+    const options = {
+      name: this.answers.name,
+      repoName: this.answers.noScopeName,
+      username: this.githubUsername,
+      npmBadge: true,
+      travisBadge: true,
+      semanticReleaseBadge: true,
+      standardBadge: true,
+      renovateBadge: this.answers.renovateApp
+    }
+
+    const badges = getBadges(options)
+    la(is.unemptyString(badges), 'expected badges markdown', options)
+
+    const badgesUrls = getBadgesUrls(options)
+    la(is.unemptyString(badgesUrls), 'expected badges urls', options)
+
     const readmeContext = {
       name: this.answers.name,
       repoName: this.answers.noScopeName,
       description: this.answers.description,
       author: this.answers.author,
       year: new Date().getFullYear(),
-      username: this.githubUsername
+      username: this.githubUsername,
+      badges: badges,
+      badgesUrls: badgesUrls
     }
     debug('Copying readme template with values', readmeContext)
+
     this.fs.copyTpl(
       this.templatePath('README.md'),
       this.destinationPath('README.md'),
@@ -343,11 +386,13 @@ const g = Generator.extend({
 
   writePackage () {
     debug('writing package.json file')
+    // remove all keywords used to pass options via answers
     const clean = _.omit(this.answers, [
       'noScopeName',
       'repoDomain',
       'typescript',
-      'immutable'
+      'immutable',
+      'renovateApp'
     ])
 
     if (this.answers.typescript) {
