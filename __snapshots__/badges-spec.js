@@ -23,7 +23,7 @@ exports['getBadgesUrls can include renovate app 1'] = `
 `
 
 exports['getBadges gets main badges 1'] = `
-[![NPM][with-package-icon]][with-package-url]
+[![NPM][npm-icon]][npm-url]
 
 [![Build status][ci-image]][ci-url]
 [![semantic-release][semantic-image]][semantic-url]
@@ -31,7 +31,7 @@ exports['getBadges gets main badges 1'] = `
 `
 
 exports['getBadges can include renovate app 1'] = `
-[![NPM][with-package-icon]][with-package-url]
+[![NPM][npm-icon]][npm-url]
 
 [![Build status][ci-image]][ci-url]
 [![semantic-release][semantic-image]][semantic-url]

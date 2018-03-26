@@ -6,7 +6,7 @@ const is = require('check-more-types')
 function getBadges (options) {
   const badges = []
   if (options.npmBadge) {
-    badges.push('[![NPM][with-package-icon]][with-package-url]')
+    badges.push('[![NPM][npm-icon]][npm-url]')
     badges.push('')
   }
   if (options.travisBadge) {
