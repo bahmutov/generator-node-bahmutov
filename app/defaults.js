@@ -53,7 +53,23 @@ const defaults = {
     registry: 'http://registry.npmjs.org/'
   },
   homepage: '',
-  bugs: ''
+  bugs: '',
+  // semantic-release v12+ settings
+  // I like Angular commit convetion plus
+  // my rule for simple "major" version upgrades
+  // whenever I have a commit like "break: something there"
+  // it should publish new major version
+  release: {
+    analyzeCommits: {
+      preset: 'angular',
+      releaseRules: [
+        {
+          type: 'break',
+          release: 'major'
+        }
+      ]
+    }
+  }
 }
 
 module.exports = defaults
