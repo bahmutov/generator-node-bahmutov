@@ -13,7 +13,7 @@
     "lint": "standard --verbose --fix app/*.js docker/*.js release/*.js test/*.js",
     "size": "t=\"$(npm pack .)\"; wc -c \"${t}\"; tar tvf \"${t}\"; rm \"${t}\";",
     "issues": "git-issues",
-    "semantic-release": "semantic-release pre && npm publish && semantic-release post",
+    "semantic-release": "semantic-release",
     "e2e": "./test/e2e.sh",
     "e2e-typescript": "./test/e2e-typescript.sh",
     "ban": "ban",
@@ -86,14 +86,21 @@
     "nock": "9.2.3",
     "pre-git": "3.17.1",
     "prettier-standard": "8.0.0",
-    "semantic-release": "8.2.3",
+    "semantic-release": "15.1.4",
     "sinon": "4.4.9",
     "snap-shot": "2.17.0",
     "snap-shot-it": "4.1.4",
     "standard": "11.0.1"
   },
   "release": {
-    "generateNotes": "github-post-release",
-    "analyzeCommits": "simple-commit-message"
+    "analyzeCommits": {
+      "preset": "angular",
+      "releaseRules": [
+        {
+          "type": "break",
+          "release": "major"
+        }
+      ]
+    }
   }
 }
