@@ -86,7 +86,7 @@
     "nock": "9.2.5",
     "pre-git": "3.17.1",
     "prettier-standard": "8.0.1",
-    "semantic-release": "15.4.0",
+    "semantic-release": "15.4.1",
     "sinon": "4.5.0",
     "snap-shot": "2.17.0",
     "snap-shot-it": "4.1.5",
