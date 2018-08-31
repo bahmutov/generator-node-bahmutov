@@ -4,5 +4,6 @@
   "major": {
     "automerge": false
   },
-  "lockFileMaintenance": true
+  "lockFileMaintenance": true,
+  "rangeStrategy": "pin"
 }
