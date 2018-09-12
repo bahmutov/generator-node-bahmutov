@@ -51,7 +51,7 @@
     "git-remote-origin-url": "2.0.0",
     "got": "9.2.1",
     "lazy-ass": "1.6.0",
-    "lodash": "4.17.10",
+    "lodash": "4.17.11",
     "parse-github-repo-url": "1.4.1",
     "yeoman-generator": "1.1.1"
   },
