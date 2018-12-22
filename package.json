@@ -53,7 +53,7 @@
     "lazy-ass": "1.6.0",
     "lodash": "4.17.11",
     "parse-github-repo-url": "1.4.1",
-    "yeoman-generator": "1.1.1"
+    "yeoman-generator": "3.2.0"
   },
   "config": {
     "pre-git": {
