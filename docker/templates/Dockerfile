@@ -2,7 +2,7 @@
 # assumes the `src/index.js` is the top level file
 
 # start with small docker image
-FROM node:6@sha256:9de20d4f3627de8101d7d3f5055ca333ad0a1b547fa111be95d23faac5b0863b
+FROM node:6@sha256:2dfba7da0332b7e3356829c140e092d2fc74bb5cdfbb0349275645f6d4368f1b
 
 # run as non-root user inside the docker container
 # see https://vimeo.com/171803492 at 17:20 mark
