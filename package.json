@@ -85,7 +85,7 @@
     "next-update-travis": "1.7.1",
     "nock": "9.6.1",
     "pre-git": "3.17.1",
-    "prettier-standard": "8.0.1",
+    "prettier-standard": "9.1.1",
     "semantic-release": "15.13.16",
     "sinon": "6.3.5",
     "snap-shot": "2.17.0",
