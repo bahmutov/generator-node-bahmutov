@@ -47,7 +47,7 @@
   "dependencies": {
     "check-more-types": "2.24.0",
     "debug": "3.2.6",
-    "fixpack": "2.3.1",
+    "fixpack": "3.0.6",
     "git-remote-origin-url": "2.0.0",
     "got": "9.6.0",
     "lazy-ass": "1.6.0",
