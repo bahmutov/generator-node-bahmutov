@@ -89,7 +89,7 @@
     "semantic-release": "15.14.0",
     "sinon": "6.3.5",
     "snap-shot": "2.17.0",
-    "snap-shot-it": "6.3.5",
+    "snap-shot-it": "7.9.10",
     "standard": "11.0.1"
   },
   "release": {
